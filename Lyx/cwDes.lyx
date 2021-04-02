@@ -1,0 +1,2919 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{matlab-prettifier}
+\usepackage{geometry}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "style={Matlab-editor}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Furuta Pendulum Virtual Laboratory Experiment
+\end_layout
+
+\begin_layout Author
+Filippo Badalamenti (CID: 01998569)
+\end_layout
+
+\begin_layout Standard
+The system that will be analysed is composed by a robot that can move in
+ a specific environment (possible case of path planning, where control aspects
+ are delegated to every single state in an hypotetic hybrid system).
+ While the entire work done willl be presented along this coursework, all
+ the Matlab code and file used will be also provided through the following
+ link: 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/fil-bad/DES_coursework
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Modeling the map 
+\end_layout
+
+\begin_layout Standard
+Since map and transition rules between rooms are provided, we can rapidly
+ derive our finite deterministic automaton (FDA)
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+We are going to use this tool 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://www.cs.unc.edu/~otternes/comp455/fsm_designer/
+\end_layout
+
+\end_inset
+
+ to rapidly generate an SVG file of the automaton; however, due to its intrinsic
+ limitations, the initial state will be represented by a single arrow that
+ doesn't start from any state.
+ 
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $G_{M}$
+\end_inset
+
+, where 
+\begin_inset Formula $E=\left\{ n,s,e,w\right\} $
+\end_inset
+
+ and 
+\begin_inset Formula $X=\left\{ Rm1,Rm2,Rm3,Rm4,Rm5,Rm6,Rm7\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset space \hspace{}
+\length 30text%
+\end_inset
+
+
+\begin_inset Graphics
+	filename /media/filippob/2A1C83641C832A41/Users/Filippo Badalamenti/Desktop/Universita'/Imperial College/Discrete Event Systems/DES_coursework/imgs/Map_automaton.svg
+	width 40text%
+
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 30text%
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $G_{M}$
+\end_inset
+
+ automaton.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Notice that in the following discussion the terminal state is not required
+ since, as we can see from the next points, we will try to locate ourselves
+ from an unknown starting state.
+ 
+\end_layout
+
+\begin_layout Section
+Modeling the robot
+\end_layout
+
+\begin_layout Standard
+Is this case the automaton 
+\begin_inset Formula $G_{R}$
+\end_inset
+
+ is described by 
+\begin_inset Formula $E=\left\{ r,n,s,e,w\right\} $
+\end_inset
+
+, and 
+\begin_inset Formula $X=\left\{ N,S,E,W\right\} $
+\end_inset
+
+, where each state tells towards where the robot is facing.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset space \hspace{}
+\length 30text%
+\end_inset
+
+
+\begin_inset Graphics
+	filename /media/filippob/2A1C83641C832A41/Users/Filippo Badalamenti/Desktop/Universita'/Imperial College/Discrete Event Systems/DES_coursework/imgs/Robot_automaton.svg
+	width 40text%
+
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 30text%
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $G_{R}$
+\end_inset
+
+ automaton.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+As we can see, both requests are satisfied – keeping track of robot heading,
+ ensuring that only the movement in the front-facing direction is enabled
+ – .
+ Since the choice of the initial state does not matter, we choose 
+\begin_inset Formula $N$
+\end_inset
+
+ as initial one.
+\end_layout
+
+\begin_layout Section
+Modeling the robot inside the map 
+\end_layout
+
+\begin_layout Standard
+We can define the automata 
+\begin_inset Formula $G_{M}$
+\end_inset
+
+ and 
+\begin_inset Formula $G_{R}$
+\end_inset
+
+ in Matlab through the following structures:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=Matlab,numbers=left,stepnumber=5,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+% Map Automaton
+\end_layout
+
+\begin_layout Plain Layout
+
+G_M = struct("E",0, "X",0, "f",0, "x0",0);
+\end_layout
+
+\begin_layout Plain Layout
+
+G_M.E = ['n','s','e','w']';
+\end_layout
+
+\begin_layout Plain Layout
+
+G_M.X = ["Rm1","Rm2","Rm3","Rm4","Rm5","Rm6","Rm7"]';
+\end_layout
+
+\begin_layout Plain Layout
+
+G_M.f = [
+\end_layout
+
+\begin_layout Plain Layout
+
+		1,2,3;
+\end_layout
+
+\begin_layout Plain Layout
+
+		2,1,4;
+\end_layout
+
+\begin_layout Plain Layout
+
+		2,3,2;
+\end_layout
+
+\begin_layout Plain Layout
+
+		3,2,1;
+\end_layout
+
+\begin_layout Plain Layout
+
+		3,7,3;
+\end_layout
+
+\begin_layout Plain Layout
+
+		7,3,4;
+\end_layout
+
+\begin_layout Plain Layout
+
+		3,4,2;
+\end_layout
+
+\begin_layout Plain Layout
+
+		4,3,1;
+\end_layout
+
+\begin_layout Plain Layout
+
+		4,5,2;
+\end_layout
+
+\begin_layout Plain Layout
+
+		5,4,1;
+\end_layout
+
+\begin_layout Plain Layout
+
+		5,6,4;
+\end_layout
+
+\begin_layout Plain Layout
+
+		6,5,3
+\end_layout
+
+\begin_layout Plain Layout
+
+		];
+\end_layout
+
+\begin_layout Plain Layout
+
+G_M.x0 = "Rm1";
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=Matlab,numbers=left,stepnumber=5,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+% Robot Automaton
+\end_layout
+
+\begin_layout Plain Layout
+
+G_R = struct("E",0, "X",0, "f",0, "x0",0);
+\end_layout
+
+\begin_layout Plain Layout
+
+G_R.E = ['n','s','e','w','r']';
+\end_layout
+
+\begin_layout Plain Layout
+
+G_R.X = ["N","S","E","W"]';
+\end_layout
+
+\begin_layout Plain Layout
+
+G_R.f = [
+\end_layout
+
+\begin_layout Plain Layout
+
+		1,1,1;
+\end_layout
+
+\begin_layout Plain Layout
+
+		1,3,5;
+\end_layout
+
+\begin_layout Plain Layout
+
+		2,2,2;
+\end_layout
+
+\begin_layout Plain Layout
+
+		2,4,5;
+\end_layout
+
+\begin_layout Plain Layout
+
+		3,3,3;
+\end_layout
+
+\begin_layout Plain Layout
+
+		3,2,5;
+\end_layout
+
+\begin_layout Plain Layout
+
+		4,4,4;
+\end_layout
+
+\begin_layout Plain Layout
+
+		4,1,5
+\end_layout
+
+\begin_layout Plain Layout
+
+		];
+\end_layout
+
+\begin_layout Plain Layout
+
+G_R.x0 = "N";
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Remembering the definition of parallel composition, it ends up that in our
+ case:
+\begin_inset Formula 
+\[
+G_{Tot}=G_{M}\Vert G_{R}=\left\{ E_{M}\cup E_{R},X_{M}\times X_{R},f,\left(X_{0,M},X_{0,R}\right)\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and then we have to implement the new transition matrix, following the rules
+ seen during class, that are:
+\begin_inset Formula 
+\[
+f\left(\left(x_{M},x_{R}\right),e\right)\coloneqq\begin{cases}
+\left(f_{1}\left(x_{M},e\right),x_{R}\right) & ,\;e\in E_{1}\setminus E_{2}\wedge f_{1}\left(x_{M},e\right)\:defined\\
+\left(x_{M},f_{2}\left(x_{R},e\right)\right) & ,\;e\in E_{2}\setminus E_{1}\wedge f_{2}\left(x_{R},e\right)\:defined\\
+\left(f_{1}\left(x_{M},e\right),f_{2}\left(x_{R},e\right)\right) & ,\;e\in E_{1}\cap E_{2}\wedge f_{1,2}\left(x_{M,R},e\right)\:defined\\
+undefined & ,\;otherwise
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now, we can define a Matlab function to obtain the parallel automaton.
+ Due to the length of the code involved, it will be first conceptually analysed
+ through the following points, and then presented as the whole code:
+\end_layout
+
+\begin_layout Enumerate
+The 
+\emph on
+union
+\emph default
+ of the two event sets is carried out; to achieve this, the entire 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ set is taken and then every other event in 
+\begin_inset Formula $E_{2}$
+\end_inset
+
+ not already included is added.
+\end_layout
+
+\begin_layout Enumerate
+The
+\emph on
+ cartesian product
+\emph default
+ of the two sets of states is done generating each possible combination
+ and rearranging them in a column vector.
+ Although not fully efficient, the proposed method is conceptually easier
+ to be implemented.
+\end_layout
+
+\begin_layout Enumerate
+For the 
+\emph on
+transition matrix
+\emph default
+, we have to implement the previously presented possible cases, looking
+ for each combination of states:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if we have a private event (for 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ or 
+\begin_inset Formula $E_{2}$
+\end_inset
+
+), then we check if there were an active event for that state, and if so,
+ the opportune transition is computed and added to the list (taking in account
+ that the update has to follow the new arrangement of the states).
+ 
+\end_layout
+
+\begin_layout Enumerate
+if we have a shared event (that is 
+\begin_inset Formula $E_{1}\cap E_{2}$
+\end_inset
+
+), the transition in each automaton must be defined, so that the resulting
+ one is given by their combination.
+ In this case the triplet of 
+\begin_inset Formula $\begin{bmatrix}x & f\left(x,e\right) & e\end{bmatrix}$
+\end_inset
+
+ is given by the rule:
+\size footnotesize
+
+\begin_inset Formula 
+\[
+\begin{bmatrix}x1+(x2-1)*length(G\_in1.X) & G\_in1.f(t1,2)+(G\_in2.f(t2,2)-1)*length(G\_in1.X) & e\end{bmatrix}
+\]
+
+\end_inset
+
+
+\size default
+
+\begin_inset Newline newline
+\end_inset
+
+Notice that the offset 
+\begin_inset Formula $(x2-1)*length(G\_in1.X)$
+\end_inset
+
+ is required in order to convert a matrix notation into a vector.
+\end_layout
+
+\begin_layout Enumerate
+In any other case, the step of the loop is skipped.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+For the 
+\emph on
+initial state
+\emph default
+, their sum is considered in the resulting automaton.
+\end_layout
+
+\begin_layout Standard
+Now we are ready to read through the code, although it is suggested to be
+ downloaded from GitHub and being visualized through a proper text editor:
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newgeometry{left=1.5cm, right=1.5cm, top=1cm, bottom=1.5cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset listings
+lstparams "language=Matlab,numbers=left,stepnumber=10,basicstyle={\scriptsize},showstringspaces=false,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+function G_out = par_comp(G_in1, G_in2) 
+\end_layout
+
+\begin_layout Plain Layout
+
+% This function will merge two automata through the parallel operator,
+\end_layout
+
+\begin_layout Plain Layout
+
+% outputting the resulting struct.
+ Due to the several operation involved,
+\end_layout
+
+\begin_layout Plain Layout
+
+% we will separe each section to be computed.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+G_out = struct("E",0, "X",0, "f",0, "x0",0);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% Part I: compute the set of events.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+G_out.E = G_in1.E; % initial events set
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\end_layout
+
+\begin_layout Plain Layout
+
+for i = 1:length(G_in2.E)
+\end_layout
+
+\begin_layout Plain Layout
+
+    if ~(ismember( G_in2.E(i), G_in1.E ))
+\end_layout
+
+\begin_layout Plain Layout
+
+        G_out.E(end+1) =  G_in2.E(i);
+\end_layout
+
+\begin_layout Plain Layout
+
+    end
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+% Part II: compute the new states.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+x_tmp = [];
+\end_layout
+
+\begin_layout Plain Layout
+
+for i = 1:length(G_in2.X)
+\end_layout
+
+\begin_layout Plain Layout
+
+    x_tmp = [x_tmp; G_in1.X + G_in2.X(i)];
+\end_layout
+
+\begin_layout Plain Layout
+
+end 
+\end_layout
+
+\begin_layout Plain Layout
+
+% the resulting states are now in a column vector of X_1*X_2 length
+\end_layout
+
+\begin_layout Plain Layout
+
+G_out.X = x_tmp;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% Part III: compute the transition matrix.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+f_tmp = [];
+\end_layout
+
+\begin_layout Plain Layout
+
+for x1 = 1:length(G_in1.X) % for each new state
+\end_layout
+
+\begin_layout Plain Layout
+
+    for x2 = 1:length(G_in2.X)
+\end_layout
+
+\begin_layout Plain Layout
+
+        for e = 1:length(G_out.E) % for each new event
+\end_layout
+
+\begin_layout Plain Layout
+
+        	if (ismember( G_out.E(e),G_in1.E ) && ...
+\end_layout
+
+\begin_layout Plain Layout
+
+				~ismember( G_out.E(e), G_in2.E )) % E1 private event
+\end_layout
+
+\begin_layout Plain Layout
+
+                     
+\end_layout
+
+\begin_layout Plain Layout
+
+				event = find( G_in1.E == G_out.E(e));
+\end_layout
+
+\begin_layout Plain Layout
+
+				for t = 1:length(G_in1.f)
+\end_layout
+
+\begin_layout Plain Layout
+
+                    if (all((G_in1.f(t,:) == [x1 0 event]) == [1 0 1]))
+\end_layout
+
+\begin_layout Plain Layout
+
+                        % the transition is well defined  
+\end_layout
+
+\begin_layout Plain Layout
+
+						f_tmp = [f_tmp;
+\end_layout
+
+\begin_layout Plain Layout
+
+								[x1+(x2-1)*length(G_in1.X) G_in1.f(t,2)+(x2-1)*length(G_in1.X) e]
+\end_layout
+
+\begin_layout Plain Layout
+
+                                ];
+\end_layout
+
+\begin_layout Plain Layout
+
+                    end
+\end_layout
+
+\begin_layout Plain Layout
+
+				end
+\end_layout
+
+\begin_layout Plain Layout
+
+			elseif (~ismember( G_out.E(e),G_in1.E ) && ...
+\end_layout
+
+\begin_layout Plain Layout
+
+                    ismember( G_out.E(e), G_in2.E )) % E2 private event
+\end_layout
+
+\begin_layout Plain Layout
+
+						
+\end_layout
+
+\begin_layout Plain Layout
+
+				event = find( G_in2.E == G_out.E(e) );
+\end_layout
+
+\begin_layout Plain Layout
+
+                for t = 1:length(G_in2.f)
+\end_layout
+
+\begin_layout Plain Layout
+
+                    if (all((G_in2.f(t,:) == [x2 0 event]) == [1 0 1]))
+\end_layout
+
+\begin_layout Plain Layout
+
+                        % the transition is well defined
+\end_layout
+
+\begin_layout Plain Layout
+
+                        f_tmp = [f_tmp;
+\end_layout
+
+\begin_layout Plain Layout
+
+								[x1+(x2-1)*length(G_in1.X) x1+(G_in2.f(t,2)-1)*length(G_in1.X) e]
+\end_layout
+
+\begin_layout Plain Layout
+
+                                ];
+\end_layout
+
+\begin_layout Plain Layout
+
+                    end
+\end_layout
+
+\begin_layout Plain Layout
+
+				end
+\end_layout
+
+\begin_layout Plain Layout
+
+			elseif (ismember( G_out.E(e),G_in1.E ) && ...
+\end_layout
+
+\begin_layout Plain Layout
+
+                    ismember( G_out.E(e), G_in2.E )) % shared event
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+				event1 = find( G_in1.E == G_out.E(e) );
+\end_layout
+
+\begin_layout Plain Layout
+
+				event2 = find( G_in2.E == G_out.E(e) );
+\end_layout
+
+\begin_layout Plain Layout
+
+				for t1 = 1:length(G_in1.f)
+\end_layout
+
+\begin_layout Plain Layout
+
+                    if (all((G_in1.f(t1,:) == [x1 0 event1]) == [1 0 1]))
+\end_layout
+
+\begin_layout Plain Layout
+
+                        for t2 = 1:length(G_in2.f)
+\end_layout
+
+\begin_layout Plain Layout
+
+							if (all((G_in2.f(t2,:) == [x2 0 event2]) == [1 0 1]))
+\end_layout
+
+\begin_layout Plain Layout
+
+                                % the transition is well defined for both
+ states  
+\end_layout
+
+\begin_layout Plain Layout
+
+                                f_tmp = [f_tmp;
+\end_layout
+
+\begin_layout Plain Layout
+
+						[x1+(x2-1)*length(G_in1.X) G_in1.f(t1,2)+(G_in2.f(t2,2)-1)*length(G_in1.X)
+ e]
+\end_layout
+
+\begin_layout Plain Layout
+
+										];
+\end_layout
+
+\begin_layout Plain Layout
+
+                            end
+\end_layout
+
+\begin_layout Plain Layout
+
+                        end
+\end_layout
+
+\begin_layout Plain Layout
+
+                    end
+\end_layout
+
+\begin_layout Plain Layout
+
+                end
+\end_layout
+
+\begin_layout Plain Layout
+
+			else
+\end_layout
+
+\begin_layout Plain Layout
+
+				continue
+\end_layout
+
+\begin_layout Plain Layout
+
+			end
+\end_layout
+
+\begin_layout Plain Layout
+
+		end
+\end_layout
+
+\begin_layout Plain Layout
+
+    end
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+G_out.f = f_tmp; % finally, assigning the computation to the output automaton
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% Part IV: compute the initial condition.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+G_out.x0 = G_in1.x0 + G_in2.x0;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+restoregeometry
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finally, as from the assignment request, we can list states, events and
+ transition matrix if the automaton 
+\begin_inset Formula $G_{M}\parallel G_{R}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\begin{array}{ccc}
+\mathbf{E}=\left(\begin{array}{c}
+n\\
+s\\
+e\\
+w\\
+r
+\end{array}\right) & \mathbf{X}=\left(\begin{array}{c}
+\mathrm{Rm1N}\\
+\mathrm{Rm2N}\\
+\mathrm{Rm3N}\\
+\mathrm{Rm4N}\\
+\mathrm{Rm5N}\\
+\mathrm{Rm6N}\\
+\mathrm{Rm7N}\\
+\mathrm{Rm1S}\\
+\mathrm{Rm2S}\\
+\mathrm{Rm3S}\\
+\mathrm{Rm4S}\\
+\mathrm{Rm5S}\\
+\mathrm{Rm6S}\\
+\mathrm{Rm7S}\\
+\mathrm{Rm1E}\\
+\mathrm{Rm2E}\\
+\mathrm{Rm3E}\\
+\mathrm{Rm4E}\\
+\mathrm{Rm5E}\\
+\mathrm{Rm6E}\\
+\mathrm{Rm7E}\\
+\mathrm{Rm1W}\\
+\mathrm{Rm2W}\\
+\mathrm{Rm3W}\\
+\mathrm{Rm4W}\\
+\mathrm{Rm5W}\\
+\mathrm{Rm6W}\\
+\mathrm{Rm7W}
+\end{array}\right) & \mathbf{f}=\left(\begin{array}{ccc}
+1 & 15 & 5\\
+8 & 22 & 5\\
+15 & 16 & 3\\
+15 & 8 & 5\\
+22 & 1 & 5\\
+2 & 16 & 5\\
+9 & 10 & 2\\
+9 & 23 & 5\\
+16 & 9 & 5\\
+23 & 22 & 4\\
+23 & 2 & 5\\
+3 & 2 & 1\\
+3 & 17 & 5\\
+10 & 11 & 2\\
+10 & 24 & 5\\
+17 & 21 & 3\\
+17 & 10 & 5\\
+24 & 3 & 5\\
+4 & 3 & 1\\
+4 & 18 & 5\\
+11 & 12 & 2\\
+11 & 25 & 5\\
+18 & 11 & 5\\
+25 & 4 & 5\\
+5 & 4 & 1\\
+5 & 19 & 5\\
+12 & 26 & 5\\
+19 & 12 & 5\\
+26 & 27 & 4\\
+26 & 5 & 5\\
+6 & 20 & 5\\
+13 & 27 & 5\\
+20 & 19 & 3\\
+20 & 13 & 5\\
+27 & 6 & 5\\
+7 & 21 & 5\\
+14 & 28 & 5\\
+21 & 14 & 5\\
+28 & 24 & 4\\
+28 & 7 & 5
+\end{array}\right)\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notice that with some patience, it is still feasible to draw the entire
+ automaton:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset space \hspace{}
+\length 30text%
+\end_inset
+
+
+\begin_inset Graphics
+	filename /media/filippob/2A1C83641C832A41/Users/Filippo Badalamenti/Desktop/Universita'/Imperial College/Discrete Event Systems/DES_coursework/imgs/MR_automaton.svg
+	width 40text%
+
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 30text%
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $G_{Tot}$
+\end_inset
+
+ automaton.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Modeling partial observability 
+\end_layout
+
+\begin_layout Standard
+As stated in the assessment, the robot is unaware of its heading; however,
+ we can assume that its location it is still available.
+ For this reason, our initial state is not completely known, as we could
+ be in a specific room but with any orientation, and if the next event is
+ a rotation one, we'll continue to stay in the same uncertain state.
+ Only when an event 
+\emph on
+m
+\emph default
+ happens, the robot moves in another room, and since the robot can move
+ only in the looking-forward direction, from that moment we'll know the
+ direction of the robot, and this information will not be lost.
+\end_layout
+
+\begin_layout Standard
+For this reason, the Matlab function that generates the new automaton has
+ two main goals:
+\end_layout
+
+\begin_layout Enumerate
+Substitute every transition in the parallel automaton with the new set of
+ events 
+\begin_inset Formula $E=\left['m','r'\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Add the new possible initial states for this automaton, as well as all the
+ transitions that might occur from them.
+\end_layout
+
+\begin_layout Standard
+The resulting automaton will be non-deterministic due to the uncertainty
+ on the initial state.
+\end_layout
+
+\begin_layout Standard
+Then, both resulting code and the list of events, states, and transitions,
+ are presented in the next two pages:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newgeometry{left=1.5cm, right=1.5cm, top=1cm, bottom=1.5cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=Matlab,numbers=left,stepnumber=5,basicstyle={\scriptsize},tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+function G_out = partial_obs(G_in)
+\end_layout
+
+\begin_layout Plain Layout
+
+% function that change the automaton following the new partial
+\end_layout
+
+\begin_layout Plain Layout
+
+% observability condition.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+G_out = struct("E",0, "X",G_in.X, "f",G_in.f, "x0",0);
+\end_layout
+
+\begin_layout Plain Layout
+
+new_e = ['m','r']';
+\end_layout
+
+\begin_layout Plain Layout
+
+G_out.E = new_e;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% now, we determine the position of events to be substituted
+\end_layout
+
+\begin_layout Plain Layout
+
+e2remove = ['n','s','e','w']';
+\end_layout
+
+\begin_layout Plain Layout
+
+e_index = zeros(4,1);
+\end_layout
+
+\begin_layout Plain Layout
+
+for e=1:length(e2remove)
+\end_layout
+
+\begin_layout Plain Layout
+
+    e_index(e) = find( G_in.E == e2remove(e));
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+r_old = find( G_in.E == 'r');
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% change the indexes of events
+\end_layout
+
+\begin_layout Plain Layout
+
+for i=1:height(G_in.f)
+\end_layout
+
+\begin_layout Plain Layout
+
+    if ( ismember(G_in.f(i,3),e_index) )
+\end_layout
+
+\begin_layout Plain Layout
+
+        G_out.f(i,3) = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+    elseif ( ismember(G_in.f(i,3),r_old) )
+\end_layout
+
+\begin_layout Plain Layout
+
+        G_out.f(i,3) = 2;
+\end_layout
+
+\begin_layout Plain Layout
+
+    end
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% finally, add the initial states
+\end_layout
+
+\begin_layout Plain Layout
+
+room = extractBefore(G_in.x0,4);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% build the state for x0
+\end_layout
+
+\begin_layout Plain Layout
+
+tmp_state = "{";
+\end_layout
+
+\begin_layout Plain Layout
+
+heading = ["N","S","E","W"];
+\end_layout
+
+\begin_layout Plain Layout
+
+for i=1:length(heading)
+\end_layout
+
+\begin_layout Plain Layout
+
+    tmp_state = tmp_state + room + heading(i) + ",";
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+tmp_state = char(tmp_state);
+\end_layout
+
+\begin_layout Plain Layout
+
+tmp_state(end) = '}';
+\end_layout
+
+\begin_layout Plain Layout
+
+G_in.x0 = string(tmp_state);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% add all the other possible initial state
+\end_layout
+
+\begin_layout Plain Layout
+
+add_state = [tmp_state];
+\end_layout
+
+\begin_layout Plain Layout
+
+for i=1:( (length(G_out.X)/length(heading))-1 ) % up to 6 in our case
+\end_layout
+
+\begin_layout Plain Layout
+
+    tmp_state = replace(tmp_state, num2str(i), num2str(i+1));
+\end_layout
+
+\begin_layout Plain Layout
+
+    add_state = [add_state; tmp_state];
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+orig_length = height(G_out.X);
+\end_layout
+
+\begin_layout Plain Layout
+
+G_out.X = [G_out.X; add_state];
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% add the new possible transitions:
+\end_layout
+
+\begin_layout Plain Layout
+
+add_state = string(add_state);
+\end_layout
+
+\begin_layout Plain Layout
+
+new_len = height(G_out.X);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% those that are loops through 'r' event
+\end_layout
+
+\begin_layout Plain Layout
+
+for x=orig_length+1:new_len
+\end_layout
+
+\begin_layout Plain Layout
+
+    G_out.f = [G_out.f; [x x find(G_out.E == 'r')]];
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% those that goes to a deterministic state
+\end_layout
+
+\begin_layout Plain Layout
+
+trans_f = find (G_out.f(:,3) == 1);
+\end_layout
+
+\begin_layout Plain Layout
+
+for i=1:length(trans_f)
+\end_layout
+
+\begin_layout Plain Layout
+
+    % find the initial state that contains the one involved in transition
+\end_layout
+
+\begin_layout Plain Layout
+
+    offset = find(contains(add_state, G_out.X(G_out.f(trans_f(i),1))));
+\end_layout
+
+\begin_layout Plain Layout
+
+	G_out.f = [G_out.f;
+\end_layout
+
+\begin_layout Plain Layout
+
+         [orig_length+offset G_out.f(trans_f(i),2) find(G_out.E == 'm')]
+\end_layout
+
+\begin_layout Plain Layout
+
+			  ];
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\begin{array}{ccc}
+\mathbf{E}=\left(\begin{array}{c}
+m\\
+r
+\end{array}\right) & \mathbf{X}=\left(\begin{array}{c}
+\mathrm{Rm1N}\\
+\mathrm{Rm2N}\\
+\mathrm{Rm3N}\\
+\mathrm{Rm4N}\\
+\mathrm{Rm5N}\\
+\mathrm{Rm6N}\\
+\mathrm{Rm7N}\\
+\mathrm{Rm1S}\\
+\mathrm{Rm2S}\\
+\mathrm{Rm3S}\\
+\mathrm{Rm4S}\\
+\mathrm{Rm5S}\\
+\mathrm{Rm6S}\\
+\mathrm{Rm7S}\\
+\mathrm{Rm1E}\\
+\mathrm{Rm2E}\\
+\mathrm{Rm3E}\\
+\mathrm{Rm4E}\\
+\mathrm{Rm5E}\\
+\mathrm{Rm6E}\\
+\mathrm{Rm7E}\\
+\mathrm{Rm1W}\\
+\mathrm{Rm2W}\\
+\mathrm{Rm3W}\\
+\mathrm{Rm4W}\\
+\mathrm{Rm5W}\\
+\mathrm{Rm6W}\\
+\mathrm{Rm7W}\\
+\{Rm1N,Rm1S,Rm1E,Rm1W\}\\
+\{Rm2N,Rm2S,Rm2E,Rm2W\}\\
+\{Rm3N,Rm3S,Rm3E,Rm3W\}\\
+\{Rm4N,Rm4S,Rm4E,Rm4W\}\\
+\{Rm5N,Rm5S,Rm5E,Rm5W\}\\
+\{Rm6N,Rm6S,Rm6E,Rm6W\}\\
+\{Rm7N,Rm7S,Rm7E,Rm7W\}
+\end{array}\right) & \mathbf{f}=\left(\begin{array}{ccc}
+1 & 15 & 2\\
+8 & 22 & 2\\
+15 & 16 & 1\\
+15 & 8 & 2\\
+22 & 1 & 2\\
+2 & 16 & 2\\
+9 & 10 & 1\\
+9 & 23 & 2\\
+16 & 9 & 2\\
+23 & 22 & 1\\
+23 & 2 & 2\\
+3 & 2 & 1\\
+3 & 17 & 2\\
+10 & 11 & 1\\
+10 & 24 & 2\\
+17 & 21 & 1\\
+17 & 10 & 2\\
+24 & 3 & 2\\
+4 & 3 & 1\\
+4 & 18 & 2\\
+11 & 12 & 1\\
+11 & 25 & 2\\
+18 & 11 & 2\\
+25 & 4 & 2\\
+5 & 4 & 1\\
+5 & 19 & 2\\
+12 & 26 & 2\\
+19 & 12 & 2\\
+26 & 27 & 1\\
+26 & 5 & 2\\
+6 & 20 & 2\\
+13 & 27 & 2\\
+20 & 19 & 1\\
+20 & 13 & 2\\
+27 & 6 & 2\\
+7 & 21 & 2\\
+14 & 28 & 2\\
+21 & 14 & 2\\
+28 & 24 & 1\\
+28 & 7 & 2\\
+29 & 29 & 2\\
+30 & 30 & 2\\
+31 & 31 & 2\\
+32 & 32 & 2\\
+33 & 33 & 2\\
+34 & 34 & 2\\
+35 & 35 & 2\\
+29 & 16 & 1\\
+30 & 10 & 1\\
+30 & 22 & 1\\
+31 & 2 & 1\\
+31 & 11 & 1\\
+31 & 21 & 1\\
+32 & 3 & 1\\
+32 & 12 & 1\\
+33 & 4 & 1\\
+33 & 27 & 1\\
+34 & 19 & 1\\
+35 & 24 & 1
+\end{array}\right)\end{array}
+\]
+
+\end_inset
+
+
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+restoregeometry
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Estimating position and heading
+\end_layout
+
+\begin_layout Standard
+Unlike the previous point, neither position nor heading is available for
+ localization.
+ For this reason, the entire state space is a possible initial state, and
+ following the hint provided by the assignment, we can represent the states
+ as row vectors of zeros and ones (hence 
+\begin_inset Formula $x_{0}=\begin{bmatrix}1 & 1 & \cdots & 1\end{bmatrix}$
+\end_inset
+
+).
+ Then, an algorithm is developed in order to compute every reachable state,
+ for every enabled event, eliminating all the state that are no longer reachable
+, and proceeding in a parallel in-depth search until we end up in single
+ states (as we'll see later on).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newgeometry{left=1.5cm, right=1.5cm, top=1cm, bottom=1.5cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\noindent
+
+\size tiny
+\begin_inset listings
+lstparams "language=Matlab,numbers=left,stepnumber=10,basicstyle={\scriptsize},showstringspaces=false,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+function G_out = observer(G_in) 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+G_out = struct("E",0, "X",0, "f",0, "x0",0);
+\end_layout
+
+\begin_layout Plain Layout
+
+% we have to first convert the event and transitions lists
+\end_layout
+
+\begin_layout Plain Layout
+
+G_in = convert2parobs(G_in); 
+\end_layout
+
+\begin_layout Plain Layout
+
+G_out.E = G_in.E;
+\end_layout
+
+\begin_layout Plain Layout
+
+% as suggested the whole initial state is given by the vector of all ones
+\end_layout
+
+\begin_layout Plain Layout
+
+% notice that the state will be expressed as a row, so that the "vector"
+ of
+\end_layout
+
+\begin_layout Plain Layout
+
+% states will always be a column vector.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+G_out.f = {};
+\end_layout
+
+\begin_layout Plain Layout
+
+G_out.x0 = ones(1,height(G_in.X));
+\end_layout
+
+\begin_layout Plain Layout
+
+G_out.X = G_out.x0; % the first defined state
+\end_layout
+
+\begin_layout Plain Layout
+
+x_new = G_out.x0;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+while height(x_new) > 0
+\end_layout
+
+\begin_layout Plain Layout
+
+	x_til = x_new(1,:); % take the first state,
+\end_layout
+
+\begin_layout Plain Layout
+
+    x_new(1,:) = [];   % and remove it from the queue of states
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+		for e = 1:length(G_in.E) % compute the reachability
+\end_layout
+
+\begin_layout Plain Layout
+
+			state_index = find (G_in.f(:,3) == e);  % find all the states with
+\end_layout
+
+\begin_layout Plain Layout
+
+													% the active event 'e'
+\end_layout
+
+\begin_layout Plain Layout
+
+			x_next = zeros(1,height(G_in.X));
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+			for x = 1:length(state_index)
+\end_layout
+
+\begin_layout Plain Layout
+
+				x_tmp = G_in.f(state_index(x),1); % starting x state
+\end_layout
+
+\begin_layout Plain Layout
+
+				if (x_til(x_tmp) == 1)
+\end_layout
+
+\begin_layout Plain Layout
+
+                	% if the Gamma is referred to a state we're considering
+\end_layout
+
+\begin_layout Plain Layout
+
+                	x_next(G_in.f(state_index(x),2)) = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+					% then we consider the f(x,e) as a valid transition
+\end_layout
+
+\begin_layout Plain Layout
+
+            	end
+\end_layout
+
+\begin_layout Plain Layout
+
+			end
+\end_layout
+
+\begin_layout Plain Layout
+
+			% once found the new state
+\end_layout
+
+\begin_layout Plain Layout
+
+			if any(x_next) % if it is a valid state
+\end_layout
+
+\begin_layout Plain Layout
+
+				% we define the transition map
+\end_layout
+
+\begin_layout Plain Layout
+
+				G_out.f(end+1,:) = {x_til, x_next, e};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+				if ~ismember(x_next, G_out.X,'rows')	% if the state does not
+\end_layout
+
+\begin_layout Plain Layout
+
+														% exist yet
+\end_layout
+
+\begin_layout Plain Layout
+
+                G_out.X = [G_out.X; x_next];	% add it to the list
+\end_layout
+
+\begin_layout Plain Layout
+
+												% of all states
+\end_layout
+
+\begin_layout Plain Layout
+
+                x_new = [x_new; x_next];     % add at the end of the queue
+\end_layout
+
+\begin_layout Plain Layout
+
+			end
+\end_layout
+
+\begin_layout Plain Layout
+
+		end
+\end_layout
+
+\begin_layout Plain Layout
+
+	end
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% implement transitions, based on the order of the new states 
+\end_layout
+
+\begin_layout Plain Layout
+
+f_tmp = zeros(height(G_out.f),width(G_out.f));
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+for h=1:height(G_out.f)
+\end_layout
+
+\begin_layout Plain Layout
+
+	f_tmp(h,1) = find (ismember(G_out.X, cell2mat(G_out.f(h,1)),'rows'));
+\end_layout
+
+\begin_layout Plain Layout
+
+	f_tmp(h,2) = find (ismember(G_out.X, cell2mat(G_out.f(h,2)),'rows'));
+\end_layout
+
+\begin_layout Plain Layout
+
+    f_tmp(h,3) = cell2mat(G_out.f(h,3));
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+G_out.f = f_tmp;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+function G_po = convert2parobs(G)
+\end_layout
+
+\begin_layout Plain Layout
+
+% In this sub-function, we convert the list of event and transition to the
+\end_layout
+
+\begin_layout Plain Layout
+
+% one that we can really observe ('m' and 'r').
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+G_po = G;
+\end_layout
+
+\begin_layout Plain Layout
+
+new_e = ['m','r']';
+\end_layout
+
+\begin_layout Plain Layout
+
+G_po.E = new_e;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% now, we determine the position of events to be substituted
+\end_layout
+
+\begin_layout Plain Layout
+
+e2remove = ['n','s','e','w']';
+\end_layout
+
+\begin_layout Plain Layout
+
+e_index = zeros(4,1);
+\end_layout
+
+\begin_layout Plain Layout
+
+for e=1:length(e2remove)
+\end_layout
+
+\begin_layout Plain Layout
+
+	e_index(e) = find( G.E == e2remove(e));
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+r_old = find( G.E == 'r');
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% finally, change the indexes of events
+\end_layout
+
+\begin_layout Plain Layout
+
+for i=1:height(G.f)
+\end_layout
+
+\begin_layout Plain Layout
+
+	if ( ismember(G.f(i,3),e_index) )
+\end_layout
+
+\begin_layout Plain Layout
+
+        G_po.f(i,3) = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+    elseif ( ismember(G.f(i,3),r_old) )
+\end_layout
+
+\begin_layout Plain Layout
+
+        G_po.f(i,3) = 2;
+\end_layout
+
+\begin_layout Plain Layout
+
+    end
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+restoregeometry
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now, answering to all the point asked in the assignment:
+\end_layout
+
+\begin_layout Enumerate
+There are 77 states for the observer automaton, which can be listed as a
+ matrix where each state is made by a row:
+\begin_inset Newline newline
+\end_inset
+
+
+\size tiny
+
+\begin_inset Formula 
+\[
+X=\left(\begin{array}{cccccccccccccccccccccccccccc}
+1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\
+0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 1 & 0\\
+0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+1 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0\\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0\\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 1\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 1 & 0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+To provide a more readable verification tool, the sum of the row and column,
+ as well the first 4 singular values are provided.
+ As we can see, two important results can be obtained by their values:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+the matrix S is a tall matrix with all the values on the main diagonal greater
+ than zero (actually 
+\begin_inset Formula $\geq1$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Enumerate
+Thanks to the 
+\emph on
+rows
+\emph default
+ vector, we know for each state how many of them have precise information
+ about robot position and heading; as we can see, there are 28 ones in this
+ vector, that means that if an appropriate word happens, it is possible
+ to end up in a deterministic state (it is obvious that just spinning would
+ not improve our knowledge on position).
+\end_layout
+
+\begin_layout Standard
+It is important to notice that both results will be different from the ones
+ obtained in the next point of the coursework.
+\end_layout
+
+\begin_layout Standard
+
+\size tiny
+\begin_inset Formula 
+\begin{multline*}
+Cols=\left(\begin{array}{cccccccccccccccccccccccccccc}
+5 & 9 & 13 & 10 & 8 & 5 & 7 & 5 & 9 & 13 & 10 & 8 & 5 & 7 & 5 & 9 & 13 & 10 & 8 & 5 & 7 & 5 & 9 & 13 & 10 & 8 & 5 & 7\end{array}\right)\\
+\begin{array}{cc}
+Rows=\left(\begin{array}{c}
+28\\
+12\\
+4\\
+12\\
+2\\
+4\\
+4\\
+12\\
+2\\
+2\\
+4\\
+1\\
+4\\
+12\\
+1\\
+2\\
+2\\
+4\\
+4\\
+1\\
+1\\
+4\\
+4\\
+1\\
+2\\
+2\\
+2\\
+4\\
+1\\
+1\\
+1\\
+4\\
+4\\
+2\\
+4\\
+1\\
+2\\
+2\\
+2\\
+2\\
+1\\
+1\\
+1\\
+1\\
+1\\
+4\\
+2\\
+1\\
+2\\
+4\\
+1\\
+1\\
+2\\
+1\\
+1\\
+1\\
+4\\
+2\\
+1\\
+2\\
+4\\
+1\\
+1\\
+1\\
+4\\
+2\\
+1\\
+2\\
+1\\
+1\\
+2\\
+2\\
+1\\
+2\\
+2\\
+2\\
+2
+\end{array}\right) & Sing\_vals=\left(\begin{array}{c}
+8.2219\\
+4.7713\\
+4.2310\\
+4.2310
+\end{array}\right)\end{array}\\
+\end{multline*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+In order to compute every possible transition given by a word, a new Matlab
+ function has been implemented:
+\begin_inset Newline newline
+\end_inset
+
+
+\size scriptsize
+
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100text%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset listings
+lstparams "language=Matlab,numbers=left,stepnumber=5,basicstyle={\scriptsize},tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+function x_final = explore_obs(G,w)
+\end_layout
+
+\begin_layout Plain Layout
+
+% Given any word and an observer automaton from an unknown state, we find
+\end_layout
+
+\begin_layout Plain Layout
+
+% out in which state we end up, starting from the completely unknown state.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+if isempty(w)
+\end_layout
+
+\begin_layout Plain Layout
+
+    x_final = G.x0;
+\end_layout
+
+\begin_layout Plain Layout
+
+    return;
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+x_final = find(ismember(G.X,G.x0,'rows')); % initial state position.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+for e=1:length(w)
+\end_layout
+
+\begin_layout Plain Layout
+
+	e_num = find (G.E == w(e));
+\end_layout
+
+\begin_layout Plain Layout
+
+	f_row = find(ismember(G.f(:,[1 3]), [x_final e_num], 'rows'));
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	if isempty(f_row) % our word has led us to an illegal state
+\end_layout
+
+\begin_layout Plain Layout
+
+		x_final = NaN;
+\end_layout
+
+\begin_layout Plain Layout
+
+		return;
+\end_layout
+
+\begin_layout Plain Layout
+
+	end
+\end_layout
+
+\begin_layout Plain Layout
+
+	x_final = G.f(f_row,2);
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% once found the final state of the word, we have to convert to the actual
+\end_layout
+
+\begin_layout Plain Layout
+
+% value of the state.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+x_final = G.X(x_final,:);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\size default
+
+\begin_inset VSpace defskip
+\end_inset
+
+In this way, we can compute where we could possibly end up.
+ In our case, since the state is certain after the word 
+\begin_inset Formula $w="mrrmrmrrmrm"$
+\end_inset
+
+– that means only one 1 is present in the row state vector of the observer
+ –, we can match it in the parallel automaton, and the resulting state is
+ 
+\begin_inset Formula $x=f\left(x_{0},w\right)="Rm2N"$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+As shown in the code above, in order to find the final state, it is sufficient
+ use the extension of 
+\emph on
+f
+\emph default
+ to words, such that 
+\begin_inset Formula $f\left(x,se\right)\coloneqq f\left(f\left(x,s\right),e\right)$
+\end_inset
+
+, looking to the column of the transition matrix of the observer automaton.
+\end_layout
+
+\begin_layout Section
+Question: Deterministic Interpretation 
+\end_layout
+
+\begin_layout Standard
+As analysed above, due to the fact that there are 28 single states, we can
+ affirm that we are able to reconstruct the exact position of the robot;
+ this is due to the fact that the map has no symmetry.
+ In fact, once the map it is modified, if we compute the same tools used
+ before (row and column sum vectors, singular values), we can see that there
+ are no single value states; instead, we have 
+\begin_inset Formula $\nicefrac{\left|X\right|}{2}$
+\end_inset
+
+ double state because of the symmetry of the map.
+ 
+\end_layout
+
+\begin_layout Standard
+For this reason, as we are only able to observe a movement and a rotation
+ without knowing towards where we are moving, we have a specular behaviour
+ along the horizontal median line of the map, and it will be impossible
+ to reconstruct our position and heading (we will always have uncertainty
+ between at least two states).
+ One of the signs of this behaviour can be found in the singular matrix
+ 
+\emph on
+S
+\emph default
+, where the last half of the diagonal values are really close to zero, and
+ thus it is ill-conditioned.
+\end_layout
+
+\begin_layout Standard
+
+\size tiny
+\begin_inset Formula 
+\begin{multline*}
+Cols=\left(\begin{array}{cccccccccccccccccccccccc}
+3 & 5 & 6 & 6 & 5 & 3 & 3 & 5 & 6 & 6 & 5 & 3 & 3 & 5 & 6 & 6 & 5 & 3 & 3 & 5 & 6 & 6 & 5 & 3\end{array}\right)\\
+\begin{array}{cc}
+Rows=\left(\begin{array}{c}
+24\\
+10\\
+4\\
+10\\
+2\\
+4\\
+2\\
+10\\
+2\\
+4\\
+2\\
+2\\
+10\\
+2\\
+4\\
+4\\
+2\\
+2\\
+2\\
+4\\
+2\\
+2\\
+2
+\end{array}\right) & Sing\_vals=\left(\begin{array}{c}
+6.9336\\
+4.1813\\
+3.1623\\
+3.1623
+\end{array}\right)\end{array}\\
+\end{multline*}
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
