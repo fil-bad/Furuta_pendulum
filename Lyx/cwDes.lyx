@@ -100,23 +100,106 @@ Filippo Badalamenti (CID: 01998569)
 \end_layout
 
 \begin_layout Standard
-The system that will be analysed is composed by a robot that can move in
- a specific environment (possible case of path planning, where control aspects
- are delegated to every single state in an hypotetic hybrid system).
- While the entire work done willl be presented along this coursework, all
- the Matlab code and file used will be also provided through the following
+This paper will follow the structure presented in the assignment.
+ All the Matlab code and file used will be also provided through the following
  link: 
 \begin_inset Flex URL
 status open
 
 \begin_layout Plain Layout
 
-https://github.com/fil-bad/DES_coursework
+https://github.com/fil-bad/Furuta_pendulum
 \end_layout
 
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Part
+Derivation of the model
+\end_layout
+
+\begin_layout Standard
+Without going much deeper, we have one main equation for the Lagrangian
+ mechanics: 
+\begin_inset Formula 
+\[
+L\left(q\left(t\right),\dot{q}\left(t\right)\right)=T\left(q\left(t\right),\dot{q}\left(t\right)\right)-V\left(q\left(t\right)\right)
+\]
+
+\end_inset
+
+while the generalized coordinates in our case are: 
+\begin_inset Formula $\left(q,\dot{q}\right)=\left(\begin{bmatrix}\theta\left(t\right) & \alpha\left(t\right)\end{bmatrix},\begin{bmatrix}\dot{\theta}\left(t\right) & \dot{\alpha}\left(t\right)\end{bmatrix}\right)$
+\end_inset
+
+ .
+ In our case, the Lagrangian equation is:
+\begin_inset Formula 
+\begin{multline*}
+L=\frac{1}{2}J_{arm}\dot{\theta}^{2}+\frac{1}{2}J_{p}\dot{\alpha}^{2}+\frac{1}{2}m_{p}\left(-\cos\left(\theta\right)\sin\left(\alpha\right)\dot{\theta}l_{p}-\sin\left(\theta\right)\cos\left(\alpha\right)\dot{\alpha}l_{p}-\sin\left(\theta\right)\dot{\theta}r\right)^{2}+\\
++\frac{1}{2}m_{p}\left(-\sin\left(\theta\right)\sin\left(\alpha\right)\dot{\theta}l_{p}+\cos\left(\theta\right)\cos\left(\alpha\right)\dot{\alpha}l_{p}+\cos\left(\theta\right)\dot{\theta}r\right)^{2}+\frac{1}{2}m_{p}\sin\left(\alpha\right)^{2}\dot{\alpha}^{2}l_{p}^{2}+m_{p}\cos\left(\alpha\right)gl_{p}
+\end{multline*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finally, the Euler-Lagrange equation can be expressed as:
+\begin_inset Formula 
+\[
+\frac{d}{dt}\frac{\partial L}{\partial\dot{q}}-\frac{\partial L}{\partial q}=\tau
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For this reason, we get two equations in column:
+\begin_inset Formula 
+\[
+\begin{bmatrix}\frac{d}{dt}\frac{\partial L}{\partial\dot{\theta}}-\frac{\partial L}{\partial\theta}\\
+\\
+\frac{d}{dt}\frac{\partial L}{\partial\dot{\alpha}}-\frac{\partial L}{\partial\alpha}
+\end{bmatrix}=\tau
+\]
+
+\end_inset
+
+For this reason, we can calculate each partial derivative of the Lagrangian
+ equation, that are:
+\size footnotesize
+
+\begin_inset Formula 
+\begin{align*}
+\boldsymbol{\frac{\partial L}{\partial\theta}} & \boldsymbol{=}m_{p}\left(-\cos\left(\theta\right)\sin\left(\alpha\right)\dot{\theta}l_{p}-\sin\left(\theta\right)\cos\left(\alpha\right)\dot{\alpha}l_{p}-\sin\left(\theta\right)\dot{\theta}r\right)\left(\sin\left(\theta\right)\sin\left(\alpha\right)\dot{\theta}l_{p}-\cos\left(\theta\right)\cos\left(\alpha\right)\dot{\alpha}l_{p}-\cos\left(\theta\right)\dot{\theta}r\right)+\\
+ & +m_{p}\left(-\sin\left(\theta\right)\sin\left(\alpha\right)\dot{\theta}l_{p}+\cos\left(\theta\right)\cos\left(\alpha\right)\dot{\alpha}l_{p}+\cos\left(\theta\right)\dot{\theta}r\right)\left(-\cos\left(\theta\right)\sin\left(\alpha\right)\dot{\theta}l_{p}-\sin\left(\theta\right)\cos\left(\alpha\right)\dot{\alpha}l_{p}-\sin\left(\theta\right)\dot{\theta}r\right)=\\
+\dots & \boldsymbol{=}-2l_{p}m_{p}\sin\left(\alpha\right)\left(2\sin\left(\theta\right)^{2}-1\right)\left(r\dot{\theta}+l_{p}\cos\left(\alpha\right)\dot{\alpha}\right)\dot{\theta}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size footnotesize
+\begin_inset Formula 
+\begin{eqnarray*}
+\boldsymbol{\frac{\partial L}{\partial\dot{\theta}}} & = & J_{\mathrm{arm}}\dot{\theta}+m_{p}\left(r\cos\left(\theta\right)+l_{p}\sin\left(\alpha\right)\sin\left(\theta\right)\right)\left(r\cos\left(\theta\right)\dot{\theta}+l_{p}\sin\left(\alpha\right)\sin\left(\theta\right)\dot{\theta}+l_{p}\cos\left(\alpha\right)\cos\left(\theta\right)\dot{\alpha}\right)+\\
+ & + & m_{p}\left(r\sin\left(\theta\right)+l_{p}\sin\left(\alpha\right)\cos\left(\theta\right)\right)\left(r\sin\left(\theta\right)\dot{\theta}+l_{p}\cos\left(\alpha\right)\sin\left(\theta\right)\dot{\alpha}+l_{p}\sin\left(\alpha\right)\cos\left(\theta\right)\dot{\theta}\right)=\\
+\dots & =
+\end{eqnarray*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
