@@ -96,7 +96,7 @@ Furuta Pendulum Virtual Laboratory Experiment
 \end_layout
 
 \begin_layout Author
-Filippo Badalamenti (CID: 01998569)
+Filippo Badalamenti (Occasional FT, CID: 01998569)
 \end_layout
 
 \begin_layout Standard
@@ -116,8 +116,28 @@ https://github.com/fil-bad/Furuta_pendulum
 .
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{part}{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Part
 Derivation of the model
+\end_layout
+
+\begin_layout Section
+From Lagrange equation to mechanical models
 \end_layout
 
 \begin_layout Standard
@@ -192,14 +212,85 @@ For this reason, we can calculate each partial derivative of the Lagrangian
 \size footnotesize
 \begin_inset Formula 
 \begin{eqnarray*}
-\boldsymbol{\frac{\partial L}{\partial\dot{\theta}}} & = & J_{\mathrm{arm}}\dot{\theta}+m_{p}\left(r\cos\left(\theta\right)+l_{p}\sin\left(a\left(t\right)\right)\sin\left(\theta\right)\right)\left(r\cos\left(\theta\right)\dot{\theta}+l_{p}\sin\left(\alpha\right)\sin\left(\theta\right)\dot{\theta}+l_{p}\cos\left(a\left(t\right)\right)\cos\left(\theta\right)\dot{\alpha}\right)+\\
- & + & m_{p}\left(r\sin\left(\theta\right)+l_{p}\sin\left(\alpha\right)\cos\left(\theta\right)\right)\left(r\sin\left(\theta\right)\dot{\theta}+l_{p}\cos\left(\alpha\right)\sin\left(\theta\right)\dot{\alpha}+l_{p}\sin\left(\alpha\right)\cos\left(\theta\right)\dot{\theta}\right)=\\
-\dots & =
+\boldsymbol{\frac{\partial L}{\partial\dot{\theta}}} & = & J_{\mathrm{arm}}\dot{\theta}+m_{p}\left(r\cos\left(\theta\right)+l_{p}\sin\left(\alpha\right)\sin\left(\theta\right)\right)\left(r\cos\left(\theta\right)\dot{\theta}+l_{p}\sin\left(\alpha\right)\sin\left(\theta\right)\dot{\theta}+l_{p}\cos\left(\alpha\right)\cos\left(\theta\right)\dot{\alpha}\right)+\\
+ & + & m_{p}\left(r\sin\left(\theta\right)+l_{p}\sin\left(\alpha\right)\cos\left(\theta\right)\right)\left(r\sin\left(\theta\right)\dot{\theta}+l_{p}\cos\left(\alpha\right)\sin\left(\theta\right)\dot{\alpha}+l_{p}\sin\left(\alpha\right)\cos\left(\theta\right)\dot{\theta}\right)\\
+\boldsymbol{\frac{d}{dt}\left(\frac{\partial L}{\partial\dot{\theta}}\right)} & = & J_{\mathrm{arm}}\ddot{\theta}+l_{p}^{2}m_{p}\ddot{\theta}+m_{p}r^{2}\ddot{\theta}-l_{p}^{2}m_{p}\sin\left(2\theta\right)\dot{\alpha}^{2}-l_{p}^{2}m_{p}\cos\left(\alpha\right)^{2}\ddot{\theta}-l_{p}m_{p}r\sin\left(\alpha\right)\dot{\alpha}^{2}+l_{p}m_{p}r\cos\left(\alpha\right)\ddot{\alpha}-\\
+ & - & 4l_{p}m_{p}r\sin\left(\alpha\right)\dot{\theta}^{2}+8l_{p}m_{p}r\sin\left(\alpha\right)\cos\left(\theta\right)^{2}\dot{\theta}^{2}+4l_{p}^{2}m_{p}\cos\left(\alpha\right)^{2}\cos\left(\theta\right)\sin\left(\theta\right)\dot{\alpha}^{2}+4l_{p}^{2}m_{p}\cos\left(\alpha\right)\sin\left(\alpha\right)\cos\left(\theta\right)^{2}\dot{\theta}\dot{\alpha}+\\
+ & + & 4l_{p}m_{p}r\sin\left(\alpha\right)\cos\left(\theta\right)\sin\left(\theta\right)\ddot{\theta}+2l_{p}^{2}m_{p}\cos\left(\alpha\right)\sin\left(\alpha\right)\cos\left(\theta\right)\sin\left(\theta\right)\ddot{\alpha}+4l_{p}m_{p}r\cos\left(\alpha\right)\cos\left(\theta\right)\sin\left(\theta\right)\dot{\theta}\dot{\alpha}
 \end{eqnarray*}
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Once calculated, we can assemble the two equations to get: 
+\end_layout
+
+\begin_layout Standard
+
+\size footnotesize
+\begin_inset Formula 
+\begin{align*}
+\boldsymbol{\frac{d}{dt}\frac{\partial L}{\partial\dot{\theta}}-\frac{\partial L}{\partial\theta}} & = & J_{\mathrm{arm}}\ddot{\theta}+l_{p}^{2}m_{p}\ddot{\theta}+m_{p}r^{2}\ddot{\theta}-l_{p}^{2}m_{p}\sin\left(2\theta\right)\dot{\alpha}^{2}-l_{p}^{2}m_{p}\cos\left(\alpha\right)^{2}\ddot{\theta}-l_{p}m_{p}r\sin\left(\alpha\right)\dot{\alpha}^{2}+l_{p}m_{p}r\cos\left(\alpha\right)\ddot{\alpha}-\\
+ & - & 2l_{p}m_{p}r\sin\left(\alpha\right)\dot{\theta}^{2}+l_{p}^{2}m_{p}\sin\left(2\alpha\right)\dot{\theta}\dot{\alpha}+4l_{p}m_{p}r\sin\left(\alpha\right)\cos\left(\theta\right)^{2}\dot{\theta}^{2}+4l_{p}^{2}m_{p}\cos\left(\dot{\alpha}\right)^{2}\cos\left(\theta\right)\sin\left(\theta\right)\dot{\alpha}^{2}+\\
+ & + & 4l_{p}m_{p}r\sin\left(\alpha\right)\cos\left(\theta\right)\sin\left(\theta\right)\ddot{\theta}+2l_{p}^{2}m_{p}\cos\left(\alpha\right)\sin\left(\alpha\right)\cos\left(\theta\right)\sin\left(\theta\right)\ddot{\alpha}+4l_{p}m_{p}r\cos\left(\alpha\right)\cos\left(\theta\right)\sin\left(\theta\right)\dot{\theta}\dot{\alpha}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The same can be done for the 
+\begin_inset Formula $\alpha\left(t\right)$
+\end_inset
+
+ variable, leading to the equation:
+\size footnotesize
+
+\begin_inset Formula 
+\begin{align*}
+\boldsymbol{\frac{\partial L}{\partial\alpha}} & = & m_{p}\sin\left(\alpha\right)l_{p}^{2}\cos\left(\alpha\right)\dot{\theta}^{2}+2m_{p}r\cos\left(\theta\right)\sin\left(\theta\right)l_{p}\cos\left(\alpha\right)\dot{\theta}^{2}+4m_{p}\cos\left(\theta\right)\sin\left(\theta\right)l_{p}^{2}\cos\left(\alpha\right)^{2}\dot{\theta}\dot{\alpha}-\\
+ & - & 2m_{p}\cos\left(\theta\right)\sin\left(\theta\right)l_{p}^{2}\dot{\theta}\dot{\alpha}-m_{p}r\sin\left(\alpha\right)l_{p}\dot{\theta}\dot{\alpha}-gm_{p}\sin\left(\alpha\right)l_{p}
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\boldsymbol{\frac{\partial L}{\partial\dot{\alpha}}} & = & J_{p}\dot{\alpha}+l_{p}^{2}m_{p}\dot{\alpha}+l_{p}m_{p}r\cos\left(\alpha\right)\dot{\theta}+\frac{1}{2}l_{p}^{2}m_{p}\sin\left(2\alpha\right)\sin\left(2\theta\right)\dot{\theta}\\
+\boldsymbol{\frac{d}{dt}\left(\frac{\partial L}{\partial\dot{\alpha}}\right)} & = & J_{p}\ddot{\alpha}+l_{p}^{2}m_{p}\ddot{\alpha}+l_{p}m_{p}r\cos\left(\alpha\right)\ddot{\theta}+l_{p}^{2}m_{p}\cos\left(\alpha\right)\sin\left(\alpha\right)\sin\left(2\theta\right)\ddot{\theta}+\\
+ & + & l_{p}^{2}m_{p}\sin\left(2\theta\right)\left(2\cos\left(\alpha\right)^{2}-1\right)\dot{\theta}\dot{\alpha}-l_{p}m_{p}r\sin\left(\alpha\right)\dot{\theta}\dot{\alpha}+2l_{p}^{2}m_{p}\cos\left(\alpha\right)\sin\left(\alpha\right)\cos\left(2\theta\right)\dot{\theta}^{2}
+\end{align*}
+
+\end_inset
+
+
+\size default
+ 
+\size footnotesize
+
+\begin_inset Formula 
+\begin{align*}
+\boldsymbol{\frac{d}{dt}\frac{\partial L}{\partial\dot{\alpha}}-\frac{\partial L}{\partial\alpha}} & = & J_{p}\ddot{\alpha}+l_{p}^{2}m_{p}\ddot{\alpha}-\frac{1}{2}l_{p}^{2}m_{p}\sin\left(2\alpha\right)\dot{\theta}^{2}+gl_{p}m_{p}\sin\left(\alpha\right)+l_{p}^{2}m_{p}\sin\left(2\alpha\right)\cos\left(2\theta\right)\dot{\theta}^{2}+\\
+ & + & l_{p}m_{p}r\cos\left(\alpha\right)\ddot{\theta}+\frac{1}{2}l_{p}^{2}m_{p}\sin\left(2\alpha\right)\sin\left(2\theta\right)\ddot{\theta}-l_{p}m_{p}r\cos\left(\alpha\right)\sin\left(2\theta\right)\dot{\theta}^{2}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Adding the 
+\begin_inset Formula $\tau=\begin{bmatrix}\tau_{m}-B_{arm}\dot{\theta}\left(t\right) & -B_{p}\dot{\alpha}\left(t\right)\end{bmatrix}$
+\end_inset
+
+ vector, we finally 
 \end_layout
 
 \begin_layout Section
