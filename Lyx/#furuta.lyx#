@@ -557,7 +557,8 @@ For this reason, if the matrix
 \begin_inset Formula $q\left(t\right)$
 \end_inset
 
-:
+ (notice that each term of the determinant is by physical definition a non
+ negative term, hence):
 \end_layout
 
 \begin_layout Standard

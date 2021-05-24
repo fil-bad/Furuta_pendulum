@@ -191,8 +191,8 @@ For this reason, we get two equations in column:
 
 \end_inset
 
-For this reason, we can calculate each partial derivative of the Lagrangian
- equation, that are:
+Then, we can calculate each partial derivative of the Lagrangian equation,
+ that are:
 \size footnotesize
 
 \begin_inset Formula 
@@ -396,14 +396,60 @@ Downward position,
 \end_layout
 
 \begin_layout Standard
-Substituting the values in the matrices, they become:
+As we know, the linearization around a point of a function is given by:
+ 
+\begin_inset Formula $f\left(x\right)\thickapprox f\left(x_{0}\right)+f'\left(x_{0}\right)\left(x-x_{0}\right)$
+\end_inset
+
+.
+ For this reason, we can approximate the trigonometric functions as: 
+\begin_inset Formula 
+\[
+\begin{cases}
+\left.\sin\left(x\right)\right|_{x_{0}=0}\thickapprox\sin\left(0\right)+\cos\left(0\right)\left(x-0\right)=x\\
+\left.\cos\left(x\right)\right|_{x_{0}=0}\thickapprox\cos\left(0\right)+\sin\left(0\right)\left(x-0\right)=1
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+that in the matrices become:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{gather*}
+D=\begin{bmatrix}m_{p}r^{2}+m_{p}l_{p}^{2}-m_{p}l_{p}^{2}\left(1\right)^{2}+J_{arm} & m_{p}\left(1\right)l_{p}r\\
+m_{p}\left(1\right)l_{p}r & J_{p}+m_{p}l_{p}^{2}
+\end{bmatrix}\\
+C=\begin{bmatrix}2m_{p}\left(1\right)\dot{\alpha}l_{p}^{2}\left(\alpha\right) & -m_{p}\left(\alpha\right)\dot{\alpha}l_{p}r\\
+-m_{p}\left(1\right)\dot{\theta}l_{p}^{2}\left(\alpha\right) & 0
+\end{bmatrix}g=\begin{bmatrix}0\\
+m_{p}g\left(\alpha\right)l_{p}
+\end{bmatrix}
+\end{gather*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Substituting the values in the matrices, they become constant ones:
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
 D=\begin{bmatrix}m_{p}r^{2}+J_{arm} & m_{p}l_{p}r\\
 m_{p}l_{p}r & J_{p}+m_{p}l_{p}^{2}
-\end{bmatrix}\ C=\begin{bmatrix}0 & 0\\
+\end{bmatrix}C=\begin{bmatrix}0 & 0\\
 0 & 0
-\end{bmatrix}\ g=\begin{bmatrix}0\\
+\end{bmatrix}g=\begin{bmatrix}0\\
 0
 \end{bmatrix}
 \]
@@ -422,7 +468,40 @@ Upward position,
 \end_layout
 
 \begin_layout Standard
+As seen above, the trigonometric functions can be approximated with: 
+\begin_inset Formula 
+\[
+\begin{cases}
+\left.\sin\left(x\right)\right|_{x_{0}=\pi}\thickapprox\sin\left(\pi\right)+\cos\left(\pi\right)\left(x-\pi\right)=-x+\pi\\
+\left.\cos\left(x\right)\right|_{x_{0}=\pi}\thickapprox\cos\left(\pi\right)+\sin\left(\pi\right)\left(x-\pi\right)=-1
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Substituting the values in the matrices, they become:
+\begin_inset Formula 
+\begin{gather*}
+D=\begin{bmatrix}m_{p}r^{2}+m_{p}l_{p}^{2}-m_{p}l_{p}^{2}\left(-1\right)^{2}+J_{arm} & m_{p}\left(-1\right)l_{p}r\\
+m_{p}\left(-1\right)l_{p}r & J_{p}+m_{p}l_{p}^{2}
+\end{bmatrix}\\
+C=\begin{bmatrix}2m_{p}\left(-1\right)\dot{\alpha}l_{p}^{2}\left(-\alpha+\pi\right) & -m_{p}\left(-\alpha+\pi\right)\dot{\alpha}l_{p}r\\
+-m_{p}\left(-1\right)\dot{\theta}l_{p}^{2}\left(-\alpha+\pi\right) & 0
+\end{bmatrix}g=\begin{bmatrix}0\\
+m_{p}g\left(-\alpha+\pi\right)l_{p}
+\end{bmatrix}
+\end{gather*}
+
+\end_inset
+
+And finally:
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
 D=\begin{bmatrix}m_{p}r^{2}+J_{arm} & -m_{p}l_{p}r\\
@@ -478,7 +557,11 @@ For this reason, if the matrix
 \begin_inset Formula $q\left(t\right)$
 \end_inset
 
-:
+ (notice that each term of the determinant is by physical definition a strictly
+ positive term, hence it is surely different from zero):
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
 \begin{cases}
@@ -544,6 +627,60 @@ D^{-1}g=\begin{pmatrix}-\frac{rg\cos\left(α\right)\sin\left(α\right)m_{p}^{2}l
 \frac{g\sin\left(α\right)m_{p}l_{p}\left(r^{2}m_{p}+l_{p}^{2}m_{p}-l_{p}^{2}\cos^{2}\left(α\right)m_{p}+J_{arm}\right)}{\left(l_{p}^{2}m_{p}+J_{p}\right)\left(r^{2}m_{p}+l_{p}^{2}m_{p}-l_{p}^{2}\cos^{2}\left(α\right)m_{p}+J_{arm}\right)-r^{2}\cos^{2}\left(α\right)m_{p}^{2}l_{p}^{2}}
 \end{pmatrix}
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{cccc}
+0 & \frac{gl_{p}^{2}m_{p}^{2}r}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & -\frac{\left(m_{p}l_{p}^{2}+J_{p}\right)\left(B_{arm}+\frac{\eta_{g}\eta_{m}K_{g}^{2}K_{m}K_{t}}{R_{m}}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & \frac{B_{p}l_{p}m_{p}r}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}}\\
+0 & -\frac{gl_{p}m_{p}\left(m_{p}r^{2}J_{arm}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & \frac{l_{p}m_{p}r\left(B_{arm}+\frac{\eta_{g}\eta_{m}K_{g}^{2}K_{m}K_{t}}{R_{m}}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & -\frac{B_{p}\left(m_{p}r^{2}+J_{arm}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From the nonlinear system analysis, we know that given a system 
+\begin_inset Formula $\dot{x}=f\left(x,u\right)$
+\end_inset
+
+, we can linearize it around equilibrium points using the jacobian function
+ over the system equations; the result is then: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{\delta x}=\frac{\partial}{\partial x}f\left(x_{e},u_{e}\right)\delta x+\frac{\partial}{\partial u}f\left(x_{e},u_{e}\right)\delta u
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For this reason, we can get a linear system, where:
+\begin_inset Formula 
+\begin{gather*}
+A=\frac{\partial}{\partial x}f\left(x_{e},u_{e}\right)=\begin{bmatrix}0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\
+0 & \frac{gl_{p}^{2}m_{p}^{2}r}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & -\frac{\left(m_{p}l_{p}^{2}+J_{p}\right)\left(B_{arm}+\frac{\eta_{g}\eta_{m}K_{g}^{2}K_{m}K_{t}}{R_{m}}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & \frac{B_{p}l_{p}m_{p}r}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}}\\
+0 & -\frac{gl_{p}m_{p}\left(m_{p}r^{2}J_{arm}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & \frac{l_{p}m_{p}r\left(B_{arm}+\frac{\eta_{g}\eta_{m}K_{g}^{2}K_{m}K_{t}}{R_{m}}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & -\frac{B_{p}\left(m_{p}r^{2}+J_{arm}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}}
+\end{bmatrix}\\
+B=\frac{\partial}{\partial u}f\left(x_{e},u_{e}\right)=\begin{bmatrix}\begin{array}{c}
+\frac{\eta_{g}\eta_{m}K_{g}K_{t}\left(m_{p}l_{p}^{2}+J_{p}\right)}{R_{m}\left(J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}\right)}\\
+-\frac{\eta_{g}\eta_{m}K_{g}K_{t}l_{p}m_{p}r}{R_{m}\left(J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}\right)}
+\end{array}\end{bmatrix}
+\end{gather*}
 
 \end_inset
 

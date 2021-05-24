@@ -37,7 +37,7 @@ first_eq = dL_dthdot_tDot-dL_dth;
 secnd_eq = dL_dadot_tDot-dL_da;
 
 
-down_f_eq = subs(subs(first_eq, th, 0), a, 0);
+down_f_eq = subs(first_eq, [th, a], [0, 0]);
 
 % why is the lagrangian equation different from the derived model?
 
@@ -81,9 +81,12 @@ de_u = jacobian(q_ddot, u);
 num_de_u = subs(de_u, [x1, x2], [0, 0])
 
 % maybe is it necessary to assume also x3,x4 = 0 ?
+%%
+
+down_de_x = simplify(subs(num_de_x, [x3, x4], [0, 0]))
 
 
-
+%% 
 
 
 
