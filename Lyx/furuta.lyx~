@@ -193,13 +193,16 @@ For this reason, we get two equations in column:
 
 Then, we can calculate each partial derivative of the Lagrangian equation,
  that are:
-\size footnotesize
+\end_layout
 
+\begin_layout Standard
+
+\size footnotesize
 \begin_inset Formula 
 \begin{align*}
 \boldsymbol{\frac{\partial L}{\partial\theta}} & \boldsymbol{=}m_{p}\left(-\cos\left(\theta\right)\sin\left(\alpha\right)\dot{\theta}l_{p}-\sin\left(\theta\right)\cos\left(\alpha\right)\dot{\alpha}l_{p}-\sin\left(\theta\right)\dot{\theta}r\right)\left(\sin\left(\theta\right)\sin\left(\alpha\right)\dot{\theta}l_{p}-\cos\left(\theta\right)\cos\left(\alpha\right)\dot{\alpha}l_{p}-\cos\left(\theta\right)\dot{\theta}r\right)+\\
  & +m_{p}\left(-\sin\left(\theta\right)\sin\left(\alpha\right)\dot{\theta}l_{p}+\cos\left(\theta\right)\cos\left(\alpha\right)\dot{\alpha}l_{p}+\cos\left(\theta\right)\dot{\theta}r\right)\left(-\cos\left(\theta\right)\sin\left(\alpha\right)\dot{\theta}l_{p}-\sin\left(\theta\right)\cos\left(\alpha\right)\dot{\alpha}l_{p}-\sin\left(\theta\right)\dot{\theta}r\right)=\\
-\dots & \boldsymbol{=}-2l_{p}m_{p}\sin\left(\alpha\right)\left(2\sin\left(\theta\right)^{2}-1\right)\left(r\dot{\theta}+l_{p}\cos\left(\alpha\right)\dot{\alpha}\right)\dot{\theta}
+\dots & \boldsymbol{=}\mathbf{0}
 \end{align*}
 
 \end_inset
@@ -212,11 +215,12 @@ Then, we can calculate each partial derivative of the Lagrangian equation,
 \size footnotesize
 \begin_inset Formula 
 \begin{eqnarray*}
-\boldsymbol{\frac{\partial L}{\partial\dot{\theta}}} & = & J_{\mathrm{arm}}\dot{\theta}+m_{p}\left(r\cos\left(\theta\right)+l_{p}\sin\left(\alpha\right)\sin\left(\theta\right)\right)\left(r\cos\left(\theta\right)\dot{\theta}+l_{p}\sin\left(\alpha\right)\sin\left(\theta\right)\dot{\theta}+l_{p}\cos\left(\alpha\right)\cos\left(\theta\right)\dot{\alpha}\right)+\\
+\boldsymbol{\frac{\partial L}{\partial\dot{\theta}}} & = & J_{\mathrm{arm}}\dot{\theta}+m_{p}\left(r\cos\left(\theta\right)-l_{p}\sin\left(\alpha\right)\sin\left(\theta\right)\right)\left(r\cos\left(\theta\right)\dot{\theta}-l_{p}\sin\left(\alpha\right)\sin\left(\theta\right)\dot{\theta}+l_{p}\cos\left(\alpha\right)\cos\left(\theta\right)\dot{\alpha}\right)+\\
  & + & m_{p}\left(r\sin\left(\theta\right)+l_{p}\sin\left(\alpha\right)\cos\left(\theta\right)\right)\left(r\sin\left(\theta\right)\dot{\theta}+l_{p}\cos\left(\alpha\right)\sin\left(\theta\right)\dot{\alpha}+l_{p}\sin\left(\alpha\right)\cos\left(\theta\right)\dot{\theta}\right)\\
-\boldsymbol{\frac{d}{dt}\left(\frac{\partial L}{\partial\dot{\theta}}\right)} & = & J_{\mathrm{arm}}\ddot{\theta}+l_{p}^{2}m_{p}\ddot{\theta}+m_{p}r^{2}\ddot{\theta}-l_{p}^{2}m_{p}\sin\left(2\theta\right)\dot{\alpha}^{2}-l_{p}^{2}m_{p}\cos\left(\alpha\right)^{2}\ddot{\theta}-l_{p}m_{p}r\sin\left(\alpha\right)\dot{\alpha}^{2}+l_{p}m_{p}r\cos\left(\alpha\right)\ddot{\alpha}-\\
- & - & 4l_{p}m_{p}r\sin\left(\alpha\right)\dot{\theta}^{2}+8l_{p}m_{p}r\sin\left(\alpha\right)\cos\left(\theta\right)^{2}\dot{\theta}^{2}+4l_{p}^{2}m_{p}\cos\left(\alpha\right)^{2}\cos\left(\theta\right)\sin\left(\theta\right)\dot{\alpha}^{2}+4l_{p}^{2}m_{p}\cos\left(\alpha\right)\sin\left(\alpha\right)\cos\left(\theta\right)^{2}\dot{\theta}\dot{\alpha}+\\
- & + & 4l_{p}m_{p}r\sin\left(\alpha\right)\cos\left(\theta\right)\sin\left(\theta\right)\ddot{\theta}+2l_{p}^{2}m_{p}\cos\left(\alpha\right)\sin\left(\alpha\right)\cos\left(\theta\right)\sin\left(\theta\right)\ddot{\alpha}+4l_{p}m_{p}r\cos\left(\alpha\right)\cos\left(\theta\right)\sin\left(\theta\right)\dot{\theta}\dot{\alpha}
+\boldsymbol{\frac{d}{dt}\left(\frac{\partial L}{\partial\dot{\theta}}\right)} & = & J_{arm}\ddot{\theta}-m_{p}\left(r\cos\left(\theta\right)-l_{p}\sin\left(\alpha\right)\sin\left(\theta\right)\right)\left(r\sin\left(\theta\right)\dot{\theta}^{2}-r\cos\left(\theta\right)\ddot{\theta}+l_{p}\sin\left(\alpha\right)\cos\left(\theta\right)\dot{\alpha}^{2}-\right.\\
+ & - & \left.l_{p}\cos\left(\alpha\right)\cos\left(\theta\right)\ddot{\alpha}+l_{p}\sin\left(\alpha\right)\cos\left(\theta\right)\dot{\theta}^{2}+l_{p}\sin\left(\alpha\right)\sin\left(\theta\right)\ddot{\theta}+2l_{p}\cos\left(\alpha\right)\sin\left(\theta\right)\dot{\theta}\dot{\alpha}\right)+\\
+ & + & m_{p}\left(r\sin\left(\theta\right)+l_{p}\sin\left(\alpha\right)\cos\left(\theta\right)\right)\left(r\cos\left(\theta\right)\dot{\theta}^{2}+r\sin\left(\theta\right)\ddot{\theta}-l_{p}\sin\left(\alpha\right)\sin\left(\theta\right)\dot{\alpha}^{2}+\right.\\
+ & + & \left.l_{p}\cos\left(\alpha\right)\sin\left(\theta\right)\ddot{\alpha}-l_{p}\sin\left(\alpha\right)\sin\left(\theta\right)\dot{\theta}^{2}+l_{p}\sin\left(\alpha\right)\cos\left(\theta\right)\ddot{\theta}+2l_{p}\cos\left(\alpha\right)\cos\left(\theta\right)\dot{\theta}\dot{\alpha}\right)
 \end{eqnarray*}
 
 \end_inset
@@ -225,18 +229,17 @@ Then, we can calculate each partial derivative of the Lagrangian equation,
 \end_layout
 
 \begin_layout Standard
-Once calculated, we can assemble the two equations to get: 
+Once calculated, we can assemble the two equations, and simplifying them
+ we get: 
 \end_layout
 
 \begin_layout Standard
 
 \size footnotesize
 \begin_inset Formula 
-\begin{align*}
-\boldsymbol{\frac{d}{dt}\frac{\partial L}{\partial\dot{\theta}}-\frac{\partial L}{\partial\theta}} & = & J_{\mathrm{arm}}\ddot{\theta}+l_{p}^{2}m_{p}\ddot{\theta}+m_{p}r^{2}\ddot{\theta}-l_{p}^{2}m_{p}\sin\left(2\theta\right)\dot{\alpha}^{2}-l_{p}^{2}m_{p}\cos\left(\alpha\right)^{2}\ddot{\theta}-l_{p}m_{p}r\sin\left(\alpha\right)\dot{\alpha}^{2}+l_{p}m_{p}r\cos\left(\alpha\right)\ddot{\alpha}-\\
- & - & 2l_{p}m_{p}r\sin\left(\alpha\right)\dot{\theta}^{2}+l_{p}^{2}m_{p}\sin\left(2\alpha\right)\dot{\theta}\dot{\alpha}+4l_{p}m_{p}r\sin\left(\alpha\right)\cos\left(\theta\right)^{2}\dot{\theta}^{2}+4l_{p}^{2}m_{p}\cos\left(\dot{\alpha}\right)^{2}\cos\left(\theta\right)\sin\left(\theta\right)\dot{\alpha}^{2}+\\
- & + & 4l_{p}m_{p}r\sin\left(\alpha\right)\cos\left(\theta\right)\sin\left(\theta\right)\ddot{\theta}+2l_{p}^{2}m_{p}\cos\left(\alpha\right)\sin\left(\alpha\right)\cos\left(\theta\right)\sin\left(\theta\right)\ddot{\alpha}+4l_{p}m_{p}r\cos\left(\alpha\right)\cos\left(\theta\right)\sin\left(\theta\right)\dot{\theta}\dot{\alpha}
-\end{align*}
+\begin{gather*}
+\boldsymbol{\frac{d}{dt}\frac{\partial L}{\partial\dot{\theta}}\cancel{-\frac{\partial L}{\partial\theta}}}=J_{arm}\ddot{\theta}-m_{p}l_{p}^{2}\cos\left(\alpha\right)^{2}\ddot{\theta}+m_{p}l_{p}^{2}\ddot{\theta}+m_{p}l_{p}r\cos\left(\alpha\right)\ddot{\alpha}+m_{p}r^{2}\ddot{\theta}-m_{p}\sin\left(\alpha\right)l_{p}r\dot{\alpha}^{2}+2m_{p}\sin\left(\alpha\right)\dot{\theta}l_{p}^{2}\cos\left(\alpha\right)\dot{\alpha}
+\end{gather*}
 
 \end_inset
 
@@ -248,24 +251,22 @@ The same can be done for the
 \begin_inset Formula $\alpha\left(t\right)$
 \end_inset
 
- variable, leading to the equation:
+ variable, and reducing the amount of term for each step leads to the equations:
 \size footnotesize
 
 \begin_inset Formula 
-\begin{align*}
-\boldsymbol{\frac{\partial L}{\partial\alpha}} & = & m_{p}\sin\left(\alpha\right)l_{p}^{2}\cos\left(\alpha\right)\dot{\theta}^{2}+2m_{p}r\cos\left(\theta\right)\sin\left(\theta\right)l_{p}\cos\left(\alpha\right)\dot{\theta}^{2}+4m_{p}\cos\left(\theta\right)\sin\left(\theta\right)l_{p}^{2}\cos\left(\alpha\right)^{2}\dot{\theta}\dot{\alpha}-\\
- & - & 2m_{p}\cos\left(\theta\right)\sin\left(\theta\right)l_{p}^{2}\dot{\theta}\dot{\alpha}-m_{p}r\sin\left(\alpha\right)l_{p}\dot{\theta}\dot{\alpha}-gm_{p}\sin\left(\alpha\right)l_{p}
-\end{align*}
+\begin{gather*}
+\boldsymbol{\frac{\partial L}{\partial\alpha}}=-l_{p}m_{p}\left(-\frac{1}{2}l_{p}\sin\left(2\alpha\right)\dot{\theta}^{2}+r\sin\left(\alpha\right)\dot{\theta}\dot{\alpha}+g\sin\left(\alpha\right)\right)
+\end{gather*}
 
 \end_inset
 
 
 \begin_inset Formula 
-\begin{align*}
-\boldsymbol{\frac{\partial L}{\partial\dot{\alpha}}} & = & J_{p}\dot{\alpha}+l_{p}^{2}m_{p}\dot{\alpha}+l_{p}m_{p}r\cos\left(\alpha\right)\dot{\theta}+\frac{1}{2}l_{p}^{2}m_{p}\sin\left(2\alpha\right)\sin\left(2\theta\right)\dot{\theta}\\
-\boldsymbol{\frac{d}{dt}\left(\frac{\partial L}{\partial\dot{\alpha}}\right)} & = & J_{p}\ddot{\alpha}+l_{p}^{2}m_{p}\ddot{\alpha}+l_{p}m_{p}r\cos\left(\alpha\right)\ddot{\theta}+l_{p}^{2}m_{p}\cos\left(\alpha\right)\sin\left(\alpha\right)\sin\left(2\theta\right)\ddot{\theta}+\\
- & + & l_{p}^{2}m_{p}\sin\left(2\theta\right)\left(2\cos\left(\alpha\right)^{2}-1\right)\dot{\theta}\dot{\alpha}-l_{p}m_{p}r\sin\left(\alpha\right)\dot{\theta}\dot{\alpha}+2l_{p}^{2}m_{p}\cos\left(\alpha\right)\sin\left(\alpha\right)\cos\left(2\theta\right)\dot{\theta}^{2}
-\end{align*}
+\begin{gather*}
+\boldsymbol{\frac{\partial L}{\partial\dot{\alpha}}}=m_{p}l_{p}^{2}\dot{\alpha}+m_{p}r\cos\left(\alpha\right)l_{p}\dot{\theta}+J_{p}\dot{\alpha}\\
+\boldsymbol{\frac{d}{dt}\left(\frac{\partial L}{\partial\dot{\alpha}}\right)}=m_{p}l_{p}^{2}\ddot{\alpha}+m_{p}r\cos\left(\alpha\right)l_{p}\ddot{\theta}+J_{p}\ddot{\alpha}-m_{p}r\sin\left(\alpha\right)\dot{\theta}l_{p}\dot{\alpha}
+\end{gather*}
 
 \end_inset
 
@@ -275,10 +276,9 @@ The same can be done for the
 \size footnotesize
 
 \begin_inset Formula 
-\begin{alignat*}{2}
-\boldsymbol{\frac{d}{dt}\frac{\partial L}{\partial\dot{\alpha}}-\frac{\partial L}{\partial\alpha}} & = & J_{p}\ddot{\alpha}+l_{p}^{2}m_{p}\ddot{\alpha}-\frac{1}{2}l_{p}^{2}m_{p}\sin\left(2\alpha\right)\dot{\theta}^{2}+gl_{p}m_{p}\sin\left(\alpha\right)+l_{p}^{2}m_{p}\sin\left(2\alpha\right)\cos\left(2\theta\right)\dot{\theta}^{2}+\\
- & + & l_{p}m_{p}r\cos\left(\alpha\right)\ddot{\theta}+\frac{1}{2}l_{p}^{2}m_{p}\sin\left(2\alpha\right)\sin\left(2\theta\right)\ddot{\theta}-l_{p}m_{p}r\cos\left(\alpha\right)\sin\left(2\theta\right)\dot{\theta}^{2}
-\end{alignat*}
+\begin{gather*}
+\boldsymbol{\frac{d}{dt}\frac{\partial L}{\partial\dot{\alpha}}-\frac{\partial L}{\partial\alpha}}=\left(m_{p}l_{p}^{2}+J_{p}\right)\ddot{\alpha}+m_{p}r\cos\left(\alpha\right)l_{p}\ddot{\theta}-m_{p}\cos\left(\alpha\right)\sin\left(\alpha\right)l_{p}^{2}\dot{\theta}^{2}+gm_{p}\sin\left(\alpha\right)l_{p}
+\end{gather*}
 
 \end_inset
 
@@ -286,12 +286,18 @@ The same can be done for the
 \end_layout
 
 \begin_layout Standard
-If we equal the 
-\begin_inset Formula $\tau=\begin{bmatrix}\tau_{m}-B_{arm}\dot{\theta}\left(t\right) & -B_{p}\dot{\alpha}\left(t\right)\end{bmatrix}^{T}$
+Equalling the vector: 
+\begin_inset Formula 
+\[
+\tau=\begin{bmatrix}\tau_{m}-B_{arm}\dot{\theta}\left(t\right)\\
+-B_{p}\dot{\alpha}\left(t\right)
+\end{bmatrix},\tau_{m}=\frac{\eta_{g}K_{g}\eta_{m}K_{t}\left(V_{m}-K_{g}K_{m}\dot{\theta}\right)}{R_{m}}
+\]
+
 \end_inset
 
- vector to the results found above, we finally get the non linear model
- expressed in the equations (7) and (8) of the assignment.
+ to the results found above, finally leads to the nonlinear model expressed
+ in the equations (7) and (8) of the assignment.
 \end_layout
 
 \begin_layout Section
@@ -358,7 +364,7 @@ setcounter{section}{0}
 \end_layout
 
 \begin_layout Section
-Linearising the model
+Linearizing the model
 \end_layout
 
 \begin_layout Standard
@@ -383,8 +389,86 @@ downward
 upward
 \emph default
  position.
- The resulting system is a linear 2-DOF one that can be analysed through
- the classical approach for mechanical systems.
+\end_layout
+
+\begin_layout Standard
+We can then proceed in two ways: 
+\end_layout
+
+\begin_layout Itemize
+Neglecting any term with order higher than linear.
+ This can be done using the formula 
+\begin_inset Formula $f\left(x\right)\thickapprox f\left(x_{0}\right)+f'\left(x_{0}\right)\left(x-x_{0}\right)$
+\end_inset
+
+, that leads for the trigonometric functions to: 
+\size footnotesize
+
+\begin_inset Formula 
+\begin{align*}
+\begin{cases}
+\left.\sin\left(x\right)\right|_{x_{0}=0}\thickapprox\sin\left(0\right)+\cos\left(0\right)\left(x-0\right)=x\\
+\left.\cos\left(x\right)\right|_{x_{0}=0}\thickapprox\cos\left(0\right)+\sin\left(0\right)\left(x-0\right)=1
+\end{cases} & \begin{cases}
+\left.\sin\left(x\right)\right|_{x_{0}=\pi}\thickapprox\sin\left(\pi\right)+\cos\left(\pi\right)\left(x-\pi\right)=-x+\pi\\
+\left.\cos\left(x\right)\right|_{x_{0}=\pi}\thickapprox\cos\left(\pi\right)+\sin\left(\pi\right)\left(x-\pi\right)=-1
+\end{cases}
+\end{align*}
+
+\end_inset
+
+
+\size default
+considering the two points later involved.
+\end_layout
+
+\begin_layout Itemize
+Linearize the system around the equilibrium points; in fact, it is legit
+ to assume that both angular speeds are equal to zero – being the position
+ a constant value –, thus allowing us to linearize the rewritten system
+ 
+\begin_inset Formula $\dot{x}=f\left(x,u\right)$
+\end_inset
+
+ around 
+\begin_inset Formula $x_{e}$
+\end_inset
+
+, following the formula: 
+\begin_inset Formula 
+\[
+\dot{\delta x}=\frac{\partial}{\partial x}f\left(x_{e},u_{e}\right)\delta x+\frac{\partial}{\partial u}f\left(x_{e},u_{e}\right)\delta u
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\delta x,\delta u$
+\end_inset
+
+ are the increments, and 
+\begin_inset Formula $\frac{\partial f}{\partial x},\frac{\partial f}{\partial u}$
+\end_inset
+
+ are the Jacobian matrices with respect to the state and input vectors,
+ and defining:
+\begin_inset Formula 
+\[
+A=\left.\frac{\partial}{\partial x}f\left(x,u\right)\right|_{x=x_{e}}\ B=\left.\frac{\partial}{\partial u}f\left(x,u\right)\right|_{x=x_{e}}
+\]
+
+\end_inset
+
+we get a linear system in the form 
+\begin_inset Formula $\dot{x}=Ax+Bu$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Due to a greater familiarity with the second method, the further dissertation
+ will follow the latter one.
 \end_layout
 
 \begin_layout Subsection
@@ -396,42 +480,25 @@ Downward position,
 \end_layout
 
 \begin_layout Standard
-As we know, the linearization around a point of a function is given by:
- 
-\begin_inset Formula $f\left(x\right)\thickapprox f\left(x_{0}\right)+f'\left(x_{0}\right)\left(x-x_{0}\right)$
+For this position, we can define the equilibrium point 
+\begin_inset Formula $\begin{pmatrix}\theta & \alpha & \dot{\theta} & \dot{\alpha}\end{pmatrix}^{T}=\begin{pmatrix}0 & 0 & 0 & 0\end{pmatrix}^{T}$
 \end_inset
 
 .
- For this reason, we can approximate the trigonometric functions as: 
+ Moreover, in order to linearize around this point, we have to rewrite the
+ equation in the form: 
 \begin_inset Formula 
 \[
-\begin{cases}
-\left.\sin\left(x\right)\right|_{x_{0}=0}\thickapprox\sin\left(0\right)+\cos\left(0\right)\left(x-0\right)=x\\
-\left.\cos\left(x\right)\right|_{x_{0}=0}\thickapprox\cos\left(0\right)+\sin\left(0\right)\left(x-0\right)=1
-\end{cases}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-that in the matrices become:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{gather*}
-D=\begin{bmatrix}m_{p}r^{2}+m_{p}l_{p}^{2}-m_{p}l_{p}^{2}\left(1\right)^{2}+J_{arm} & m_{p}\left(1\right)l_{p}r\\
-m_{p}\left(1\right)l_{p}r & J_{p}+m_{p}l_{p}^{2}
+\dot{x}=\begin{pmatrix}\dot{q}\\
+\ddot{q}
+\end{pmatrix}=\begin{pmatrix}\begin{bmatrix}\dot{\theta}\\
+\dot{\alpha}
 \end{bmatrix}\\
-C=\begin{bmatrix}2m_{p}\left(1\right)\dot{\alpha}l_{p}^{2}\left(\alpha\right) & -m_{p}\left(\alpha\right)\dot{\alpha}l_{p}r\\
--m_{p}\left(1\right)\dot{\theta}l_{p}^{2}\left(\alpha\right) & 0
-\end{bmatrix}g=\begin{bmatrix}0\\
-m_{p}g\left(\alpha\right)l_{p}
-\end{bmatrix}
-\end{gather*}
+D^{-1}\left(\tau-g-C\begin{bmatrix}\dot{\theta}\\
+\dot{\alpha}
+\end{bmatrix}\right)
+\end{pmatrix}
+\]
 
 \end_inset
 
@@ -439,20 +506,179 @@ m_{p}g\left(\alpha\right)l_{p}
 \end_layout
 
 \begin_layout Standard
-Substituting the values in the matrices, they become constant ones:
+However, the matrix 
+\begin_inset Formula $D$
+\end_inset
+
+ must be invertible, and this can be easily verified if 
+\begin_inset Formula $\det\left(D\right)\neq0$
+\end_inset
+
+:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-D=\begin{bmatrix}m_{p}r^{2}+J_{arm} & m_{p}l_{p}r\\
-m_{p}l_{p}r & J_{p}+m_{p}l_{p}^{2}
-\end{bmatrix}C=\begin{bmatrix}0 & 0\\
-0 & 0
-\end{bmatrix}g=\begin{bmatrix}0\\
-0
+\det\left(D\right)=\left(m_{p}r^{2}+m_{p}l_{p}^{2}-m_{p}l_{p}^{2}\cos\left(\alpha\right)^{2}+J_{arm}\right)\left(J_{p}+m_{p}l_{p}^{2}\right)-\left(m_{p}\cos\left(\alpha\right)l_{p}r\right)^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+but if we consider that all the terms have physical sense when they are
+ strictly positive numbers, we can do some considerations:
+\end_layout
+
+\begin_layout Itemize
+for 
+\begin_inset Formula $\alpha=\pm\frac{\pi}{2}$
+\end_inset
+
+, the determinant is always sign definite (for everything that makes sense);
+\end_layout
+
+\begin_layout Itemize
+for 
+\begin_inset Formula $\alpha\neq\pm\frac{\pi}{2}$
+\end_inset
+
+ (and assuming it to be w.l.o.g.
+ 
+\begin_inset Formula $=k\pi,\ k\in\mathbb{Z}$
+\end_inset
+
+, so that we consider the most negative case), we get:
+\begin_inset Formula 
+\[
+\left(m_{p}r^{2}+J_{arm}\right)\left(J_{p}+m_{p}l_{p}^{2}\right)-\left(m_{p}l_{p}r\right)^{2}
+\]
+
+\end_inset
+
+so it is enough that the equation, once replaced the real values, it is
+ not fullfilled at the equality with zero.
+\end_layout
+
+\begin_layout Standard
+Once ensured this, we can then write down the state space equations
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+For simplicity, I will treat (Q1) and (Q2) of Part III at the same moment,
+ writing directly the state space representation.
+\end_layout
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{bmatrix}x_{1}\left(t\right) & x_{2}\left(t\right) & x_{3}\left(t\right) & x_{4}\left(t\right)\end{bmatrix}^{T}=\begin{bmatrix}\theta\left(t\right) & \alpha\left(t\right) & \dot{\theta}\left(t\right) & \dot{\alpha}\left(t\right)\end{bmatrix}^{T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+so that we can rewrite the equation as:
+\begin_inset Formula 
+\[
+\dot{x}=\begin{pmatrix}\dot{x}_{1}\\
+\dot{x}_{2}\\
+\dot{x}_{3}\\
+\dot{x}_{4}
+\end{pmatrix}=\begin{pmatrix}x_{3}\\
+x_{4}\\
+D^{-1}\left(\tau-g-C\begin{bmatrix}x_{3}\\
+x_{4}
+\end{bmatrix}\right)
+\end{pmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where: 
+\begin_inset Formula 
+\[
+D^{-1}=\frac{1}{\det\left(D\right)}\begin{bmatrix}D_{22} & -D_{12}\\
+-D_{21} & D_{11}
 \end{bmatrix}
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and 
+\begin_inset Formula $D_{ij}$
+\end_inset
+
+ denote the component of the matrix 
+\begin_inset Formula $D$
+\end_inset
+
+ in the 
+\emph on
+i
+\emph default
+-row, 
+\emph on
+j
+\emph default
+-column position.
+\end_layout
+
+\begin_layout Standard
+We can then linearize the system through the Jacobian operator, and then
+ evaluating the resulting matrices in the equilibrium point 
+\begin_inset Formula $x_{down}$
+\end_inset
+
+ (thanks to the 
+\emph on
+subs
+\emph default
+ function in Matlab).
+\end_layout
+
+\begin_layout Standard
+Without writing the full matrix equations (they are difficult to fit in
+ a page), the resulting matrices of the linearized system are:
+\end_layout
+
+\begin_layout Standard
+
+\size footnotesize
+\begin_inset Formula 
+\begin{alignat*}{1}
+A & =\left.\frac{\partial}{\partial x}f\left(x,u\right)\right|_{x=x_{down}}=\begin{bmatrix}0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\
+0 & \frac{gl_{p}^{2}m_{p}^{2}r}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & -\frac{\left(m_{p}l_{p}^{2}+J_{p}\right)\left(B_{arm}+\frac{\eta_{g}\eta_{m}K_{g}^{2}K_{m}K_{t}}{R_{m}}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & \frac{B_{p}l_{p}m_{p}r}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}}\\
+0 & -\frac{gl_{p}m_{p}\left(m_{p}r^{2}+J_{arm}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & \frac{l_{p}m_{p}r\left(B_{arm}+\frac{\eta_{g}\eta_{m}K_{g}^{2}K_{m}K_{t}}{R_{m}}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & -\frac{B_{p}\left(m_{p}r^{2}+J_{arm}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}}
+\end{bmatrix}\\
+B & =\left.\frac{\partial}{\partial u}f\left(x,u\right)\right|_{x=x_{down}}=\begin{bmatrix}\begin{array}{c}
+0\\
+0\\
+\frac{\eta_{g}\eta_{m}K_{g}K_{t}\left(m_{p}l_{p}^{2}+J_{p}\right)}{R_{m}\left(J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}\right)}\\
+-\frac{\eta_{g}\eta_{m}K_{g}K_{t}l_{p}m_{p}r}{R_{m}\left(J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}\right)}
+\end{array}\end{bmatrix}
+\end{alignat*}
 
 \end_inset
 
@@ -468,50 +694,75 @@ Upward position,
 \end_layout
 
 \begin_layout Standard
-As seen above, the trigonometric functions can be approximated with: 
-\begin_inset Formula 
-\[
-\begin{cases}
-\left.\sin\left(x\right)\right|_{x_{0}=\pi}\thickapprox\sin\left(\pi\right)+\cos\left(\pi\right)\left(x-\pi\right)=-x+\pi\\
-\left.\cos\left(x\right)\right|_{x_{0}=\pi}\thickapprox\cos\left(\pi\right)+\sin\left(\pi\right)\left(x-\pi\right)=-1
-\end{cases}
-\]
-
+Following the same approach, we have as equilibrium point 
+\begin_inset Formula $\begin{pmatrix}\theta & \alpha & \dot{\theta} & \dot{\alpha}\end{pmatrix}^{T}=\begin{pmatrix}0 & \pi & 0 & 0\end{pmatrix}^{T}$
 \end_inset
 
+.
+ Since the state vector that we have to find out is 
+\begin_inset Formula $\begin{bmatrix}x_{1}\left(t\right) & x_{2}\left(t\right) & x_{3}\left(t\right) & x_{4}\left(t\right)\end{bmatrix}^{T}=\begin{bmatrix}\theta\left(t\right) & \alpha\left(t\right)-\pi & \dot{\theta}\left(t\right) & \dot{\alpha}\left(t\right)\end{bmatrix}^{T}$
+\end_inset
 
+.
+ This means that we can change the coordinates for 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ so that, when we will linearize, we do it aound the new origin.
+ Another approach is instead to leave the equations unchanged and then linearize
+ around the equilibrium point expressed as function of 
+\begin_inset Formula $\theta$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
-Substituting the values in the matrices, they become:
+If we proceed as seen above, the system becomes:
+\end_layout
+
+\begin_layout Standard
+
+\size footnotesize
 \begin_inset Formula 
-\begin{gather*}
-D=\begin{bmatrix}m_{p}r^{2}+m_{p}l_{p}^{2}-m_{p}l_{p}^{2}\left(-1\right)^{2}+J_{arm} & m_{p}\left(-1\right)l_{p}r\\
-m_{p}\left(-1\right)l_{p}r & J_{p}+m_{p}l_{p}^{2}
+\begin{alignat*}{1}
+A & =\left.\frac{\partial}{\partial x}f\left(x,u\right)\right|_{x=x_{up}}=\begin{bmatrix}0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\
+0 & \frac{gl_{p}^{2}m_{p}^{2}r}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & -\frac{\left(m_{p}l_{p}^{2}+J_{p}\right)\left(B_{arm}+\frac{\eta_{g}\eta_{m}K_{g}^{2}K_{m}K_{t}}{R_{m}}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & -\frac{B_{p}l_{p}m_{p}r}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}}\\
+0 & \frac{gl_{p}m_{p}\left(m_{p}r^{2}+J_{arm}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & -\frac{l_{p}m_{p}r\left(B_{arm}+\frac{\eta_{g}\eta_{m}K_{g}^{2}K_{m}K_{t}}{R_{m}}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & -\frac{B_{p}\left(m_{p}r^{2}+J_{arm}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}}
 \end{bmatrix}\\
-C=\begin{bmatrix}2m_{p}\left(-1\right)\dot{\alpha}l_{p}^{2}\left(-\alpha+\pi\right) & -m_{p}\left(-\alpha+\pi\right)\dot{\alpha}l_{p}r\\
--m_{p}\left(-1\right)\dot{\theta}l_{p}^{2}\left(-\alpha+\pi\right) & 0
-\end{bmatrix}g=\begin{bmatrix}0\\
-m_{p}g\left(-\alpha+\pi\right)l_{p}
-\end{bmatrix}
-\end{gather*}
+B & =\left.\frac{\partial}{\partial u}f\left(x,u\right)\right|_{x=x_{up}}=\begin{bmatrix}\begin{array}{c}
+0\\
+0\\
+\frac{\eta_{g}\eta_{m}K_{g}K_{t}\left(m_{p}l_{p}^{2}+J_{p}\right)}{R_{m}\left(J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}\right)}\\
+\frac{\eta_{g}\eta_{m}K_{g}K_{t}l_{p}m_{p}r}{R_{m}\left(J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}\right)}
+\end{array}\end{bmatrix}
+\end{alignat*}
 
 \end_inset
 
-And finally:
+
+\end_layout
+
+\begin_layout Part
+System Analysis
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
-\[
-D=\begin{bmatrix}m_{p}r^{2}+J_{arm} & -m_{p}l_{p}r\\
--m_{p}l_{p}r & J_{p}+m_{p}l_{p}^{2}
-\end{bmatrix}\ C=\begin{bmatrix}0 & 0\\
-0 & 0
-\end{bmatrix}\ g=\begin{bmatrix}0\\
-0
-\end{bmatrix}
-\]
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{section}{0}
+\end_layout
 
 \end_inset
 
@@ -519,171 +770,288 @@ D=\begin{bmatrix}m_{p}r^{2}+J_{arm} & -m_{p}l_{p}r\\
 \end_layout
 
 \begin_layout Section
-State space representation 
+Evaluating A, B matrices and assessing stability
+\end_layout
+
+\begin_layout Subsection
+Downward position
 \end_layout
 
 \begin_layout Standard
-Due to the linearization around equilibrium points, both 
-\begin_inset Formula $C$
-\end_inset
-
- and 
-\begin_inset Formula $g$
-\end_inset
-
- matrices become null ones.
- In particular, the equations become:
-\begin_inset Formula 
-\begin{align*}
-D_{(0,0)}\ddot{q}\left(t\right)=\tau & \ \ ,\ \ D_{(0,\pi)}\ddot{q}\left(t\right)=\tau
-\end{align*}
-
-\end_inset
-
-
+Using the values given in the Table 1 of the assessment, and substituting
+ it in the two matrices, we get:
 \end_layout
 
 \begin_layout Standard
-For this reason, if the matrix 
-\begin_inset Formula $D$
-\end_inset
-
- is invertible – that means 
-\begin_inset Formula $\det\left(D\right)\neq0$
-\end_inset
-
- –, we can invert it and get an expression for the second order derivatives
- of 
-\begin_inset Formula $q\left(t\right)$
-\end_inset
-
-:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\begin{cases}
-\ddot{q}_{down}\left(t\right)=D_{(0,0)}^{-1}\tau=\begin{pmatrix}\frac{J_{p}+l_{p}^{2}m_{p}}{l_{p}^{2}J_{arm}m_{p}+r^{2}m_{p}J_{p}+J_{arm}J_{p}} & -\frac{rm_{p}l_{p}}{l_{p}^{2}J_{arm}m_{p}+r^{2}m_{p}J_{p}+J_{arm}J_{p}}\\
--\frac{rm_{p}l_{p}}{l_{p}^{2}J_{arm}m_{p}+r^{2}m_{p}J_{p}+J_{arm}J_{p}} & \frac{r^{2}m_{p}+J_{arm}}{l_{p}^{2}J_{arm}m_{p}+r^{2}m_{p}J_{p}+J_{arm}J_{p}}
-\end{pmatrix}\begin{pmatrix}\tau_{m}-B_{arm}\dot{\theta}\left(t\right)\\
--B_{p}\dot{\alpha}\left(t\right)
-\end{pmatrix}\\
-\ddot{q}_{up}\left(t\right)=D_{(0,\pi)}^{-1}\tau=\begin{pmatrix}\frac{J_{p}+l_{p}^{2}m_{p}}{l_{p}^{2}J_{arm}m_{p}+r^{2}m_{p}J_{p}+J_{arm}J_{p}} & \frac{rm_{p}l_{p}}{l_{p}^{2}J_{arm}m_{p}+r^{2}m_{p}J_{p}+J_{arm}J_{p}}\\
-\frac{rm_{p}l_{p}}{l_{p}^{2}J_{arm}m_{p}+r^{2}m_{p}J_{p}+J_{arm}J_{p}} & \frac{r^{2}m_{p}+J_{arm}}{l_{p}^{2}J_{arm}m_{p}+r^{2}m_{p}J_{p}+J_{arm}J_{p}}
-\end{pmatrix}\begin{pmatrix}\tau_{m}-B_{arm}\dot{\theta}\left(t\right)\\
--B_{p}\dot{\alpha}\left(t\right)
-\end{pmatrix}
-\end{cases}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-We can now introduce the state vectors 
-\begin_inset Formula $\begin{bmatrix}x_{1}\left(t\right) & x_{2}\left(t\right) & x_{3}\left(t\right) & x_{4}\left(t\right)\end{bmatrix}^{T}=\begin{bmatrix}\theta\left(t\right) & \alpha\left(t\right) & \dot{\theta}\left(t\right) & \dot{\alpha}\left(t\right)\end{bmatrix}^{T}$
-\end_inset
-
- and 
-\begin_inset Formula $\begin{bmatrix}x_{1}\left(t\right) & x_{2}\left(t\right) & x_{3}\left(t\right) & x_{4}\left(t\right)\end{bmatrix}^{T}=\begin{bmatrix}\theta\left(t\right) & \alpha\left(t\right)-\pi & \dot{\theta}\left(t\right) & \dot{\alpha}\left(t\right)\end{bmatrix}^{T}$
-\end_inset
-
- for downward and upward positions respectively.
-\end_layout
-
-\begin_layout Standard
-In this case, the systems become (we keep the matrices 
-\begin_inset Formula $D$
-\end_inset
-
- in the shortest form, since they have only constants): 
-\begin_inset Formula 
-\[
-down:\ \ \dot{x}=\begin{bmatrix}\dot{x}_{1}\\
-\dot{x}_{2}\\
-\dot{x}_{3}\\
-\dot{x}_{4}
-\end{bmatrix}=\begin{bmatrix}x_{3}\\
-x_{4}\\
-D_{(0,0)}^{-1}\begin{pmatrix}\tau_{m}-B_{arm}x_{3}\\
--B_{p}x_{4}
-\end{pmatrix}
-\end{bmatrix}\ \ ,\ \ \tau_{m}=\frac{\eta_{g}K_{g}\eta_{m}K_{t}\left(u-K_{g}K_{m}x_{3}\right)}{R_{m}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-D^{-1}g=\begin{pmatrix}-\frac{rg\cos\left(α\right)\sin\left(α\right)m_{p}^{2}l_{p}^{2}}{\left(l_{p}^{2}m_{p}+J_{p}\right)\left(r^{2}m_{p}+l_{p}^{2}m_{p}-l_{p}^{2}\cos^{2}\left(α\right)m_{p}+J_{arm}\right)-r^{2}\cos^{2}\left(α\right)m_{p}^{2}l_{p}^{2}}\\
-\frac{g\sin\left(α\right)m_{p}l_{p}\left(r^{2}m_{p}+l_{p}^{2}m_{p}-l_{p}^{2}\cos^{2}\left(α\right)m_{p}+J_{arm}\right)}{\left(l_{p}^{2}m_{p}+J_{p}\right)\left(r^{2}m_{p}+l_{p}^{2}m_{p}-l_{p}^{2}\cos^{2}\left(α\right)m_{p}+J_{arm}\right)-r^{2}\cos^{2}\left(α\right)m_{p}^{2}l_{p}^{2}}
-\end{pmatrix}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\left(\begin{array}{cccc}
-0 & \frac{gl_{p}^{2}m_{p}^{2}r}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & -\frac{\left(m_{p}l_{p}^{2}+J_{p}\right)\left(B_{arm}+\frac{\eta_{g}\eta_{m}K_{g}^{2}K_{m}K_{t}}{R_{m}}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & \frac{B_{p}l_{p}m_{p}r}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}}\\
-0 & -\frac{gl_{p}m_{p}\left(m_{p}r^{2}J_{arm}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & \frac{l_{p}m_{p}r\left(B_{arm}+\frac{\eta_{g}\eta_{m}K_{g}^{2}K_{m}K_{t}}{R_{m}}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & -\frac{B_{p}\left(m_{p}r^{2}+J_{arm}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}}
-\end{array}\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-From the nonlinear system analysis, we know that given a system 
-\begin_inset Formula $\dot{x}=f\left(x,u\right)$
-\end_inset
-
-, we can linearize it around equilibrium points using the jacobian function
- over the system equations; the result is then: 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\dot{\delta x}=\frac{\partial}{\partial x}f\left(x_{e},u_{e}\right)\delta x+\frac{\partial}{\partial u}f\left(x_{e},u_{e}\right)\delta u
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-For this reason, we can get a linear system, where:
 \begin_inset Formula 
 \begin{gather*}
-A=\frac{\partial}{\partial x}f\left(x_{e},u_{e}\right)=\begin{bmatrix}0 & 0 & 1 & 0\\
+A=\begin{bmatrix}0 & 0 & 1 & 0\\
 0 & 0 & 0 & 1\\
-0 & \frac{gl_{p}^{2}m_{p}^{2}r}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & -\frac{\left(m_{p}l_{p}^{2}+J_{p}\right)\left(B_{arm}+\frac{\eta_{g}\eta_{m}K_{g}^{2}K_{m}K_{t}}{R_{m}}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & \frac{B_{p}l_{p}m_{p}r}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}}\\
-0 & -\frac{gl_{p}m_{p}\left(m_{p}r^{2}J_{arm}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & \frac{l_{p}m_{p}r\left(B_{arm}+\frac{\eta_{g}\eta_{m}K_{g}^{2}K_{m}K_{t}}{R_{m}}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}} & -\frac{B_{p}\left(m_{p}r^{2}+J_{arm}\right)}{J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}}
+0 & \frac{5169259020477411}{97834235525000} & -\frac{15506119043916576}{794903163640625} & \frac{2559865848}{3913369421}\\
+\\
+0 & -\frac{38382920592829641}{391336942100000} & \frac{15475651065023064}{794903163640625} & -\frac{4751896122}{3913369421}
+\end{bmatrix}\approx\begin{bmatrix}0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\
+0 & 52.837 & −19.507 & 0.654\\
+0 & -98.082 & 19.469 & −1.214
 \end{bmatrix}\\
-B=\frac{\partial}{\partial u}f\left(x_{e},u_{e}\right)=\begin{bmatrix}\begin{array}{c}
-\frac{\eta_{g}\eta_{m}K_{g}K_{t}\left(m_{p}l_{p}^{2}+J_{p}\right)}{R_{m}\left(J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}\right)}\\
--\frac{\eta_{g}\eta_{m}K_{g}K_{t}l_{p}m_{p}r}{R_{m}\left(J_{arm}m_{p}l_{p}^{2}+J_{p}m_{p}r^{2}+J_{arm}J_{p}\right)}
-\end{array}\end{bmatrix}
+\\
+B=\begin{bmatrix}0\\
+0\\
+\frac{44598579129216}{1271845061825}\\
+\\
+-\frac{44510947365024}{1271845061825}
+\end{bmatrix}\approx\begin{bmatrix}0\\
+0\\
+35.066\\
+-34.997
+\end{bmatrix}
 \end{gather*}
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Now, to assess the stability property, we have to remember for a linearized
+ system, we have to look at the eigenvalues of the matrix 
+\begin_inset Formula $A=\frac{\partial}{\partial x}f\left(x_{e},u_{e}\right)$
+\end_inset
+
+, for which three possible cases arise:
+\end_layout
+
+\begin_layout Enumerate
+The matrix 
+\begin_inset Formula $\frac{\partial}{\partial x}f\left(x_{e},u_{e}\right)$
+\end_inset
+
+ is Hurwitz.
+ This means that:
+\begin_inset Formula 
+\[
+\forall\lambda_{i}\in eigs\left(\frac{\partial}{\partial x}f\left(x_{e},u_{e}\right)\right)=\left\{ \lambda_{1},\dots,\lambda_{n}\right\} :Re\left\{ \lambda_{i}\right\} <0
+\]
+
+\end_inset
+
+In this case, the equilibrium is locally asymptotically stable.
+\end_layout
+
+\begin_layout Enumerate
+The matrix 
+\begin_inset Formula $\frac{\partial}{\partial x}f\left(x_{e},u_{e}\right)$
+\end_inset
+
+ is such that: 
+\begin_inset Formula 
+\[
+\exists\lambda_{i}\in eigs\left(\frac{\partial}{\partial x}f\left(x_{e},u_{e}\right)\right)=\left\{ \lambda_{1},\dots,\lambda_{n}\right\} :Re\left\{ \lambda_{i}\right\} >0
+\]
+
+\end_inset
+
+In this case, the equilibrium is unstable.
+\end_layout
+
+\begin_layout Enumerate
+The matrix 
+\begin_inset Formula $\frac{\partial}{\partial x}f\left(x_{e},u_{e}\right)$
+\end_inset
+
+ is such that: 
+\begin_inset Formula 
+\[
+\begin{cases}
+\forall\lambda_{i}\in eigs\left(\frac{\partial}{\partial x}f\left(x_{e},u_{e}\right)\right)=\left\{ \lambda_{1},\dots,\lambda_{n}\right\} :Re\left\{ \lambda_{i}\right\} \leq0\\
+\exists\lambda_{j}:Re\left\{ \lambda_{j}\right\} =0
+\end{cases}
+\]
+
+\end_inset
+
+In this case, we cannot assert anything; it is logical since we don't have
+ a single point with minimum energy; instead, we have a minimum for every
+ value of 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+ The only thing we could eventually assess is that it would be Lyapunov
+ stable, but not asymptotically convergent (in fact, the point of convergence
+ depends from the specifical initial condition).
+\end_layout
+
+\begin_layout Standard
+For the downward position, the eigenvalues are:
+\begin_inset Formula 
+\[
+eigs(A_{down})=\left\{ \begin{array}{c}
+0\\
+-\frac{1222738973915481}{70368744177664}\\
+-\frac{3766174288345861}{2251799813685248}+j\frac{976194666914269}{140737488355328}\\
+-\frac{3766174288345861}{2251799813685248}-j\frac{976194666914269}{140737488355328}
+\end{array}\right\} \approx\left\{ \begin{array}{c}
+0\\
+−17.376\\
+-1.673+j6.936\\
+-1.673-j6.936
+\end{array}\right\} 
+\]
+
+\end_inset
+
+From the rules analyzed above, we cannot assess any form of stability from
+ linearization.
+\end_layout
+
+\begin_layout Subsection
+Upward position
+\end_layout
+
+\begin_layout Standard
+From the point of view of simply substituting values, we can use the results
+ found for the downward position and change the signs appropriately.
+ Hence, we have:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{gather*}
+A=\begin{bmatrix}0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\
+0 & \frac{5169259020477411}{97834235525000} & -\frac{15506119043916576}{794903163640625} & -\frac{2559865848}{3913369421}\\
+\\
+0 & \frac{38382920592829641}{391336942100000} & -\frac{15475651065023064}{794903163640625} & -\frac{4751896122}{3913369421}
+\end{bmatrix}\approx\begin{bmatrix}0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\
+0 & 52.837 & -19.507 & -0.654\\
+0 & 98.082 & -19.469 & -1.214
+\end{bmatrix}\\
+\\
+B=\begin{bmatrix}0\\
+0\\
+\frac{44598579129216}{1271845061825}\\
+\\
+\frac{44510947365024}{1271845061825}
+\end{bmatrix}\approx\begin{bmatrix}0\\
+0\\
+35.066\\
+34.997
+\end{bmatrix}
+\end{gather*}
+
+\end_inset
+
+Now, assessing stability, and applying the same rules as the previous point,
+ we get:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+eigs(A_{up})=\left\{ \begin{array}{c}
+0\\
+-\frac{1607239695991555}{70368744177664}\\
+\frac{8300623629294261}{1125899906842624}\\
+-\frac{5914786364422933}{1125899906842624}
+\end{array}\right\} \approx\left\{ \begin{array}{c}
+0\\
+-22.840\\
+7.372\\
+-5.253
+\end{array}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As we expected, the upward position is an unstable equilibrium.
+\end_layout
+
+\begin_layout Section
+Checking controllability
+\end_layout
+
+\begin_layout Standard
+We can verify the controllability of a linear system checking if the 
+\begin_inset Formula $R=\begin{bmatrix}B & AB & \cdots & A^{n-1}B\end{bmatrix}\in\mathbb{R}^{n\times nr}$
+\end_inset
+
+ matrix has full row rank, that is 
+\begin_inset Formula $rank\left(R\right)=n$
+\end_inset
+
+.
+ Moreover, we can verify directly with Matlab through the 
+\emph on
+ctrb
+\emph default
+ function.
+\end_layout
+
+\begin_layout Subsection
+Downward position
+\end_layout
+
+\begin_layout Standard
+For this position, we have: 
+\begin_inset Formula 
+\[
+R_{down}=\begin{bmatrix}0 & \frac{4935107427201581}{140737488355328} & -\frac{6218166413817175}{8796093022208} & \frac{6825292479804947}{549755813888}\\
+0 & -\frac{4925410432840623}{140737488355328} & \frac{6378776113532615}{8796093022208} & -\frac{770400999661797}{68719476736}\\
+\frac{4935107427201581}{140737488355328} & -\frac{6218166413817175}{8796093022208} & \frac{6825292479804947}{549755813888} & -\frac{3628355444977149}{17179869184}\\
+-\frac{4925410432840623}{140737488355328} & \frac{6378776113532615}{8796093022208} & -\frac{770400999661797}{68719476736} & \frac{6328762140136585}{34359738368}
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and we have 
+\begin_inset Formula $rank\left(R_{down}\right)=4$
+\end_inset
+
+, so the system in this configuration is controllable.
+\end_layout
+
+\begin_layout Subsection
+Upward position
+\end_layout
+
+\begin_layout Standard
+In this case, we have:
+\begin_inset Formula 
+\[
+R_{up}=\begin{bmatrix}0 & \frac{4935107427201581}{140737488355328} & -\frac{6218166413817175}{8796093022208} & \frac{8858444698715643}{549755813888}\\
+0 & \frac{4925410432840623}{140737488355328} & -\frac{6378776113532615}{8796093022208} & \frac{4968681040599551}{274877906944}\\
+\frac{4935107427201581}{140737488355328} & -\frac{6218166413817175}{8796093022208} & \frac{8858444698715643}{549755813888} & -\frac{3130720068146841}{8589934592}\\
+\frac{4925410432840623}{140737488355328} & -\frac{6378776113532615}{8796093022208} & \frac{4968681040599551}{274877906944} & -\frac{1747114645631177}{4294967296}
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and again, we have 
+\begin_inset Formula $rank\left(R_{up}\right)=4$
+\end_inset
+
+, thus allowing the possibility of designing a control for the system.
+\end_layout
+
+\begin_layout Part
+Controller design and implementation
 \end_layout
 
 \end_body
