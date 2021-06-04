@@ -296,7 +296,7 @@ Equalling the vector:
 
 \end_inset
 
- to the results found above, finally leads to the nonlinear model expressed
+to the results found above, finally leads to the nonlinear model expressed
  in the equations (7) and (8) of the assignment.
 \end_layout
 
@@ -708,7 +708,7 @@ Following the same approach, we have as equilibrium point
 \begin_inset Formula $\alpha$
 \end_inset
 
- so that, when we will linearize, we do it aound the new origin.
+ so that, when we will linearize, we do it around the new origin.
  Another approach is instead to leave the equations unchanged and then linearize
  around the equilibrium point expressed as function of 
 \begin_inset Formula $\theta$
@@ -718,7 +718,12 @@ Following the same approach, we have as equilibrium point
 \begin_inset Formula $\alpha$
 \end_inset
 
-.
+, and later consider the equilibrium point in the new coordinates (hence
+ 
+\begin_inset Formula $x_{2}=\alpha-\pi\stackrel{\alpha=\pi}{\Longrightarrow}x_{2}=0,x_{2}+\pi=\alpha$
+\end_inset
+
+ ).
  
 \end_layout
 
@@ -1003,8 +1008,11 @@ For this position, we have:
 \begin_inset Formula 
 \[
 R_{down}=\begin{bmatrix}0 & \frac{4935107427201581}{140737488355328} & -\frac{6218166413817175}{8796093022208} & \frac{6825292479804947}{549755813888}\\
+\\
 0 & -\frac{4925410432840623}{140737488355328} & \frac{6378776113532615}{8796093022208} & -\frac{770400999661797}{68719476736}\\
+\\
 \frac{4935107427201581}{140737488355328} & -\frac{6218166413817175}{8796093022208} & \frac{6825292479804947}{549755813888} & -\frac{3628355444977149}{17179869184}\\
+\\
 -\frac{4925410432840623}{140737488355328} & \frac{6378776113532615}{8796093022208} & -\frac{770400999661797}{68719476736} & \frac{6328762140136585}{34359738368}
 \end{bmatrix}
 \]
@@ -1031,8 +1039,11 @@ In this case, we have:
 \begin_inset Formula 
 \[
 R_{up}=\begin{bmatrix}0 & \frac{4935107427201581}{140737488355328} & -\frac{6218166413817175}{8796093022208} & \frac{8858444698715643}{549755813888}\\
+\\
 0 & \frac{4925410432840623}{140737488355328} & -\frac{6378776113532615}{8796093022208} & \frac{4968681040599551}{274877906944}\\
+\\
 \frac{4935107427201581}{140737488355328} & -\frac{6218166413817175}{8796093022208} & \frac{8858444698715643}{549755813888} & -\frac{3130720068146841}{8589934592}\\
+\\
 \frac{4925410432840623}{140737488355328} & -\frac{6378776113532615}{8796093022208} & \frac{4968681040599551}{274877906944} & -\frac{1747114645631177}{4294967296}
 \end{bmatrix}
 \]
@@ -1052,6 +1063,1589 @@ and again, we have
 
 \begin_layout Part
 Controller design and implementation
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{section}{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Pole placement
+\end_layout
+
+\begin_layout Standard
+Once ensured that 
+\begin_inset Formula $\left(A_{down},B_{down}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(A_{up},B_{up}\right)$
+\end_inset
+
+ pairs are controllable, it is legit to move the poles of the open loop
+ system, such that, once we close the loop, we can obtain the desired behaviour.
+ In particular, from a theoretical point of view, given the linear system
+ 
+\begin_inset Formula $\dot{x}=Ax+Bu$
+\end_inset
+
+, we can consider the static feedback law 
+\begin_inset Formula $u=K\left(x_{des}-x\right),$
+\end_inset
+
+so that considering the closed loop dynamics that are given by 
+\begin_inset Formula $\dot{x}=\left(A-BK\right)x+BKx_{des}$
+\end_inset
+
+, we converge to the desired input (state) reference 
+\begin_inset Formula $x_{des}$
+\end_inset
+
+, with 
+\begin_inset Formula $K$
+\end_inset
+
+ chosen so that the eigenvalues of 
+\begin_inset Formula $\left(A-BK\right)$
+\end_inset
+
+ are the one desired.
+\end_layout
+
+\begin_layout Standard
+In order to achieve this, we can use several methods such as the Achermann's
+ formula or the Simon-Mitter algorithm (since, as we'll see later, it is
+ enough to move just one and two poles to improve the behaviour of the system).
+ Executively, we will use the 
+\emph on
+place
+\emph default
+ function in Matlab.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+With a system that is non-canonical (higher order system) the relationships
+ are not exact.
+ One idea is to place one or two dominant poles to meet our requirements
+ and place the rest of poles to be significantly faster, so that we can
+ one sense neglect the effect of the dynamics for the other transient response.
+\end_layout
+
+\begin_layout Subsection
+Downward position
+\end_layout
+
+\begin_layout Standard
+Analising the system, the approximated eigenvalues (used here due to their
+ better readability) are:
+\begin_inset Formula 
+\[
+eigs(A_{d})=\left\{ \begin{array}{cccc}
+0, & −17.376, & -1.673+j6.936, & -1.673-j6.936\end{array}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now, we have to find 
+\begin_inset Formula $K_{d}$
+\end_inset
+
+ such that the matrix 
+\begin_inset Formula $\left(A_{d}-B_{d}K_{d}\right)$
+\end_inset
+
+ will be asymptotically stable; looking at the eigs, we notice two main
+ things:
+\end_layout
+
+\begin_layout Enumerate
+we have a pole in zero, hence the system is marginaly stable; to solve this
+ problem, it is enough moving it from the origin into the strictly negative
+ real line.
+\end_layout
+
+\begin_layout Enumerate
+the system is not in a canonical form for the second order analysis; however,
+ since the 1) point above, and the fact that the second pole is an order
+ of magnitude faster than the later two (WRONG; see the module), we can
+ see that the behaviour is the one of an underdamped system 
+\begin_inset Formula $\zeta\in\left(0,1\right)=0.2344$
+\end_inset
+
+, so the system converges but with a lot of damping; to prevent this, it
+ is enough to get four distinct and asymptotically stable poles, so that
+ the damping factor would be equal to 1, that is the case of 
+\emph on
+critically damped
+\emph default
+ systems.
+ (we can verify this with the 
+\emph on
+damp
+\emph default
+ function of Matlab)
+\end_layout
+
+\begin_layout Standard
+Thanks to this considerations, we can put as desired eigenvalues: 
+\begin_inset Formula 
+\[
+eigs(A_{d}-B_{d}K_{d})=\left\{ \begin{array}{cccc}
+-3, & -18, & -8, & -10\end{array}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where the control law is given by the feedback loop with 
+\begin_inset Formula $u=K_{d}\left(x_{des}-x\right)$
+\end_inset
+
+, and:
+\begin_inset Formula 
+\begin{eqnarray*}
+K_{d} & = & \begin{bmatrix}-\frac{6117366928380881}{2251799813685248} & \frac{2971164168543337}{140737488355328} & -\frac{1270943529509367}{562949953421312} & \frac{97966944119591}{35184372088832}\end{bmatrix}\\
+ & \approx & \begin{bmatrix}-2.7167 & 21.1114 & -2.2576 & 2.7844\end{bmatrix}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Upward position
+\end_layout
+
+\begin_layout Standard
+In this case, the approximated eigenvalues are:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+eigs(A_{u})=\left\{ \begin{array}{cccc}
+0, & -22.840, & 7.372, & -5.253\end{array}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+By request, we want to stabilize the system, and in order to do this, we
+ can make again some considerations:
+\end_layout
+
+\begin_layout Enumerate
+To make the system stable, we have to move the unstable pole so that it
+ will have 
+\begin_inset Formula $Re\left\{ \lambda_{i}\right\} <0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+We have again a pole in zero, that gives a 
+\emph on
+marginal stability
+\emph default
+ of the system.
+ For this reason, we have to move it away from the origin, and make it asymptoti
+cally stable.
+\end_layout
+
+\begin_layout Standard
+Again, to improve the readability of the system, we make the poles as integers,
+ so the closed loop system becomes:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+eigs(A_{u}-B_{u}K_{u})=\left\{ \begin{array}{cccc}
+-3, & -23, & -4, & -6\end{array}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and the matrix of gain used by the input is: 
+\begin_inset Formula 
+\begin{eqnarray*}
+K_{u} & = & \begin{bmatrix}-\frac{4689981311758687}{4503599627370496} & \frac{4054537097117843}{281474976710656} & -\frac{3142386730601753}{2251799813685248} & \frac{2065823870463971}{1125899906842624}\end{bmatrix}\\
+ & \approx & \begin{bmatrix}-1.0414 & 14.4046 & -1.3955 & 1.8348\end{bmatrix}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+LQR control law
+\end_layout
+
+\begin_layout Standard
+The Linear Quadratic Regulator controller follow the same idea of pole placement
+, but instead of empirically assign poles in order to satisfy certain requiremen
+ts, other considerations are made in order to improve its efficiency as
+ controller.
+\end_layout
+
+\begin_layout Standard
+In fact, given the system 
+\begin_inset Formula $\dot{x}=Ax+Bu$
+\end_inset
+
+, and the state-feedback law 
+\begin_inset Formula $u=-Kx$
+\end_inset
+
+, we choose the matrix 
+\begin_inset Formula $K$
+\end_inset
+
+ such that it minimize the cost function: 
+\begin_inset Formula 
+\[
+J\left(u\right)=\int_{0}^{\infty}\left(x^{T}Qx+u^{T}Ru+2x^{T}Nu\right)dt
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In order to minimize it, we have to set 
+\begin_inset Formula $K=R^{-1}\left(B^{T}P+N^{T}\right)$
+\end_inset
+
+, where 
+\begin_inset Formula $P$
+\end_inset
+
+ is a symmetric matrix that is found solving the continuos time 
+\emph on
+algebraic Riccati equation
+\emph default
+ (
+\series bold
+ARE
+\series default
+):
+\begin_inset Formula 
+\[
+A^{T}P+PA-\left(PB+N\right)R^{-1}\left(B^{T}P+N^{T}\right)+Q=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+while 
+\begin_inset Formula $A,B,N,Q,R$
+\end_inset
+
+ are known real coefficient matrices (
+\begin_inset Formula $N$
+\end_inset
+
+ will be set equal to zero).
+\end_layout
+
+\begin_layout Subsection
+Downward position
+\end_layout
+
+\begin_layout Standard
+By requirement, the matrices must assume the values:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Q_{d}=\begin{bmatrix}0.01 & 0_{1\times3}\\
+0_{3\times1} & I_{3\times3}
+\end{bmatrix}\ R_{d}=10
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using the 
+\emph on
+lqr
+\emph default
+ function in Matlab, we get the matrix 
+\begin_inset Formula $K$
+\end_inset
+
+ that satisfy all the required conditions presented above.
+ For the sake of completeness, we report also the eigenvalues given as output
+ of the function, that are the one of the closed loop matrix 
+\begin_inset Formula $A_{d_{cl}}=\left(A_{d}-B_{d}K_{lqr}\right)$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+K_{d_{lqr}} & = & \begin{bmatrix}\frac{2278661198716255}{72057594037927936} & -\frac{7428399756562269}{9007199254740992} & \frac{6307372313118589}{72057594037927936} & -\frac{3478848771555317}{36028797018963968}\end{bmatrix}\\
+ & \approx & \begin{bmatrix}0.0316 & -0.8247 & 0.0875 & -0.0966\end{bmatrix}
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+eigs\left(A_{d_{cl}}\right)=\left\{ \begin{array}{c}
+-\frac{890264704655807}{18014398509481984}\\
+-\frac{4659624664606745}{2251799813685248}+j\frac{7120251430763241}{1125899906842624}\\
+-\frac{4659624664606745}{2251799813685248}-j\frac{7120251430763241}{1125899906842624}\\
+-\frac{3234408201994563}{140737488355328}
+\end{array}\right\} \approx\left\{ \begin{array}{c}
+-0.0494\\
+-2.0693+j6.3241\\
+-2.0693-j6.3241\\
+-22.9819
+\end{array}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From the result found above, we see that instead of using our approach for
+ let the system critically damped, the minimum energy one move the poles
+ just enough to ensure stability, while minimizing the cost.
+\end_layout
+
+\begin_layout Subsection
+Upward position
+\end_layout
+
+\begin_layout Standard
+In this case the matrices involved in the minimization are:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Q_{u}=\begin{bmatrix}0.01 & 0_{1\times3}\\
+0_{3\times1} & I_{3\times3}
+\end{bmatrix}\ R_{u}=100
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+while the gain matrix 
+\begin_inset Formula $K_{u}$
+\end_inset
+
+ and the eigenvalues become:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+K_{u_{lqr}} & = & \begin{bmatrix}-\frac{1}{100} & \frac{3554156018742015}{281474976710656} & -\frac{1266987890578365}{1125899906842624} & \frac{1759550344771959}{1125899906842624}\end{bmatrix}\\
+ & \approx & \begin{bmatrix}-0.0100 & 12.6269 & -1.1253 & 1.5628\end{bmatrix}
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+eigs\left(A_{u_{cl}}\right)=\left\{ \begin{array}{c}
+-\frac{5099557538736035}{288230376151711744}\\
+-\frac{752962117144551}{140737488355328}\\
+-\frac{8079440650005905}{1125899906842624}\\
+-\frac{6589480795020015}{281474976710656}
+\end{array}\right\} \approx\left\{ \begin{array}{c}
+-0.0177\\
+-5.3501\\
+-7.1760\\
+-23.4105
+\end{array}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Again the poles have been slightly moved, while the unstable pole was almost
+ mirrored in the stable part of the complex plane.
+\end_layout
+
+\begin_layout Part
+Controllers simulation and testing
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{section}{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Once done every theoretical analysis, we can proceed into simulation.
+ To make the things better, we can make a Simulink model in which we can
+ highlight both structure and workflow of the solution.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Simulink_model.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Simulink Furuta model.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Where in the linear system the matrices for the output part are defined
+ as 
+\begin_inset Formula $C=eye\left(4\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $D=zeros\left(4,1\right)$
+\end_inset
+
+ in order to maintain the state unchanged.
+ Moreover, the linear model will see its matrices changed each time we want
+ to test a different configuration, the non linear system is given by the
+ Matlab function below:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=Matlab,numbers=left,stepnumber=5,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+function x_dot = furuta(u,x)
+\end_layout
+
+\begin_layout Plain Layout
+
+% Furuta pendulum 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% renaming state in compliance with altready written code
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% th = x(1); % not used variable, saving calculations
+\end_layout
+
+\begin_layout Plain Layout
+
+a = x(2); % x(2)+pi FOR UPWARD POSITION
+\end_layout
+
+\begin_layout Plain Layout
+
+th_d = x(3);
+\end_layout
+
+\begin_layout Plain Layout
+
+a_d = x(4);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% assigning values to symbolic values 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Rm = 2.6; Kt = 7.68e-3; Em = 0.69; Km = 7.68e-3; Kg = 70;
+\end_layout
+
+\begin_layout Plain Layout
+
+Eg = 0.9; mp = 0.127; lp = 0.1556; Jp = 0.0012; Jarm = 0.002;
+\end_layout
+
+\begin_layout Plain Layout
+
+Bp = 0.0024; Barm = 0.0024; r = 0.2159; g = 9.81;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% defining matrices
+\end_layout
+
+\begin_layout Plain Layout
+
+D = [(r^2)*mp+(lp^2)*mp-(lp^2)*(cos(a)^2)*mp+Jarm, r*cos(a)*mp*lp;
+\end_layout
+
+\begin_layout Plain Layout
+
+    r*cos(a)*mp*lp                              , (lp^2)*mp+Jp];
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+C = [2*mp*cos(a)*a_d*(lp^2)*sin(a), -mp*sin(a)*a_d*lp*r;
+\end_layout
+
+\begin_layout Plain Layout
+
+    -mp*cos(a)*th_d*(lp^2)*sin(a) ,           0        ];
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+G = [	  0; 
+\end_layout
+
+\begin_layout Plain Layout
+
+	mp*g*sin(a)*lp];
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+tau_m = Eg*Kg*Em*Kt*(u-Kg*Km*th_d)/Rm;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+tau = [tau_m - Barm*th_d;
+\end_layout
+
+\begin_layout Plain Layout
+
+			-Bp*a_d 	];
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% defining the non-linear equations
+\end_layout
+
+\begin_layout Plain Layout
+
+x_dot  = zeros(4,1);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+x_dot(1:2) = [th_d;
+\end_layout
+
+\begin_layout Plain Layout
+
+               a_d]; 
+\end_layout
+
+\begin_layout Plain Layout
+
+x_dot(3:4) = (D^-1)*(tau - G - C*[th_d; a_d]);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notice that the nonlinear system is written so that the state space is in
+ accordance with the downward position; for this reason, when we want to
+ run the simulation in the upward one, we have to offset the state so that
+ we can consider the upward position as origin for both the linearized and
+ the nonlinear system, we have to offset it of 
+\begin_inset Formula $-\pi$
+\end_inset
+
+ for the 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ part.
+\end_layout
+
+\begin_layout Section
+Open loop response
+\end_layout
+
+\begin_layout Standard
+As per the specification, we want to observe the behaviour of the linearized
+ system when no input is applied (the nonlinear simulations will be done
+ later in the coursework, at the section 5).
+\end_layout
+
+\begin_layout Standard
+As initial condition, the following vector has been chosen:
+\begin_inset Formula 
+\[
+\begin{bmatrix}x_{1}\left(0\right) & x_{2}\left(0\right) & x_{3}\left(0\right) & x_{4}\left(0\right)\end{bmatrix}^{T}=\begin{bmatrix}0.5 & \nicefrac{\pi}{4} & 0.3 & 0.1\end{bmatrix}^{T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This initial condition has been chosen so that the linearized system follow
+ quite well the non linear one, but the differences in their evolutions
+ start to show up.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Lin_openLoop.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Open loop response of the whole system.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can then zoom over the 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ variable (the one with highest interest), in order to show its trajectory
+ over time.
+ As we can notice, the underdamped behaviour is noticeable, so that the
+ system goes to zero like oscillating around zero.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Lin_openLoop_alpha.svg
+	lyxscale 50
+	width 45text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/Lin_K_down_alpha.svg
+	lyxscale 50
+	width 45text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Evolution over time for 
+\begin_inset Formula $\alpha\left(t\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha_{cl}\left(t\right)$
+\end_inset
+
+ (without and with control).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As we can see from figures above, the system controlled with 
+\begin_inset Formula $K_{down}$
+\end_inset
+
+ control (made by pole placement) now have a very slight overshoot, while
+ the damping is now gone (we converge from the same side to zero, instead
+ of oscillating around it).
+\end_layout
+
+\begin_layout Section
+Square-wave reference
+\end_layout
+
+\begin_layout Standard
+As request, we have now to feed a desired reference that changes over time;
+ we can expect two different behaviours:
+\end_layout
+
+\begin_layout Itemize
+The frequency of the square wave is 
+\emph on
+low
+\emph default
+ w.r.t the dynamics of the system; in this case, the controlled pendulum will
+ reach the target state (asymptotically) before moving again once the set-point
+ is changed;
+\end_layout
+
+\begin_layout Itemize
+The frequency is high; in this case, the physical system will not be sufficientl
+y fast to keep up with the change of the target value, hence the state of
+ the system will oscillate trying to follow the input, but with a lower
+ amplitude.
+ Therefore, we say say that the system acts as a Low Pass Filter (LPF) with
+ respect to the input signal.
+\end_layout
+
+\begin_layout Standard
+In the simulations, the same initial conditions as the previous point are
+ applied (even if after the initial transient behaviour, the system will
+ follow the dynamics imposed by the reference signal, thus making them useless);
+ also, two cases are presented, for low and high frequency.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Lin_K_down_ref_slow.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with frequency of 
+\begin_inset Formula $\theta_{ref}\left(t\right)=0.1Hz$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Lin_K_down_ref_fast.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with frequency of 
+\begin_inset Formula $\theta_{ref}\left(t\right)=1Hz$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As we can see from the simulations above, the results adheres to the discussion
+ presented before.
+\end_layout
+
+\begin_layout Section
+LQR performance
+\end_layout
+
+\begin_layout Standard
+As presented before, the LQR is characterized by the attempt to reduce the
+ energy used by control globally.
+ For this reason, it is reasonable expecting that the speed of the controller
+ depends on weights used in 
+\begin_inset Formula $Q$
+\end_inset
+
+ and 
+\begin_inset Formula $R$
+\end_inset
+
+ matrices, while the time of convergence will be higher (by also looking
+ at the eigenvalues of the closed loop matrix 
+\begin_inset Formula $A_{cl,lqr}$
+\end_inset
+
+).
+ In particular, with a very small weight for the 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+component of the state, we can expect that the error for 
+\begin_inset Formula $\theta\left(t\right)$
+\end_inset
+
+ would be 
+\begin_inset Quotes eld
+\end_inset
+
+tolerated
+\begin_inset Quotes erd
+\end_inset
+
+ more, hence putting less effort for it.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Lin_K_lqr_d_ref_slow.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with frequency of 
+\begin_inset Formula $\theta_{ref}\left(t\right)=0.1Hz$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As previously supposed, 
+\begin_inset Formula $\alpha,\dot{\theta},\dot{\alpha}$
+\end_inset
+
+ go to their reference quickly, while 
+\begin_inset Formula $\theta$
+\end_inset
+
+, having a much lower associated weight, it is not able to reach the set
+ point value that changes over time (it would work for very slow square
+ wave signals).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Lin_K_lqr_d_ref_fast.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with frequency of 
+\begin_inset Formula $\theta_{ref}\left(t\right)=1Hz$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Increasing the frequency worsens the behaviour, with 
+\begin_inset Formula $\theta$
+\end_inset
+
+ that converges even more slowly and pushing itself nearer to zero.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Lin_K_lqr_d_ref_fast.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with frequency of 
+\begin_inset Formula $\theta_{ref}\left(t\right)=1Hz$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Upward position
+\end_layout
+
+\begin_layout Standard
+For the upright position we have to bear in mind that now the origin of
+ the state space is upwards, so that we can make a linear system as it would
+ be.
+ By requirements, we have to set 
+\begin_inset Formula $\theta\left(t\right)=\pi,\forall t\in\mathbb{R}$
+\end_inset
+
+ for all the following simulations, where we will validate our controller
+ in the linearized case.
+\end_layout
+
+\begin_layout Subsection
+Constant reference signal
+\end_layout
+
+\begin_layout Standard
+For this case, we want to reach the unstable equilibrium in the upward position,
+ starting with similar initial conditions to the ones presented in the previous
+ section:
+\begin_inset Formula 
+\[
+\begin{bmatrix}x_{1}\left(0\right) & x_{2}\left(0\right) & x_{3}\left(0\right) & x_{4}\left(0\right)\end{bmatrix}^{T}=\begin{bmatrix}0.5 & \nicefrac{\pi}{8} & 0.3 & 0.1\end{bmatrix}^{T}
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+In this case, we start with an angle of 
+\begin_inset Formula $22.5°$
+\end_inset
+
+ from the vertical axis, so we are sufficiently unbalanced to need a real
+ quick control to stabilize the pendulum (NOT WRITE THIS: remember that
+ the energy required and speed of poles approaches infinity for 
+\begin_inset Formula $\alpha\longrightarrow\pm\frac{\pi}{2}$
+\end_inset
+
+, this without exploiting the whole state space and constraining it to only
+ the upper part for i.e.
+ admissibility reasons).
+\end_layout
+
+\begin_layout Standard
+For instance, the complete reference for the whole state space is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{bmatrix}x_{1,ref}\left(t\right) & x_{2,ref}\left(t\right) & x_{3,ref}\left(t\right) & x_{4,ref}\left(t\right)\end{bmatrix}^{T}=\begin{bmatrix}\pi & 0 & 0 & 0\end{bmatrix}^{T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Lin_K_up.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{up,pp}$
+\end_inset
+
+ control.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As we can see, the state goes to steady state in few seconds, stabilizing
+ the system to the desired reference.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Lin_K_lqr_u.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{up,lqr}$
+\end_inset
+
+ control.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similarly to the previous section, the LQR section shows up a behaviour
+ that is similar to the previous one for 
+\begin_inset Formula $\alpha,\dot{\theta},\dot{\alpha}$
+\end_inset
+
+, while being two order of magnitude slower for 
+\begin_inset Formula $\theta$
+\end_inset
+
+ (even if not shown, the 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ state approaches the reference signal at around 300 seconds, 100 times
+ slower with respect to the other controller and in alignment with a 100
+ times smaller weight for its component in the matrix 
+\begin_inset Formula $Q$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsection
+Square-wave reference signal
+\end_layout
+
+\begin_layout Standard
+This time, in order to have less transient and fit better on paper the simulatio
+ns found, the initial conditions will be:
+\begin_inset Formula 
+\[
+\begin{bmatrix}x_{1}\left(0\right) & x_{2}\left(0\right) & x_{3}\left(0\right) & x_{4}\left(0\right)\end{bmatrix}^{T}=\begin{bmatrix}\pi-0.1 & \nicefrac{\pi}{8} & 0.3 & 0.1\end{bmatrix}^{T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this way, the transient time will be small, and we can easily observe
+ the steady state oscillations (WRONG: since both linearized systems are
+ controllable, we were able to let the eigenvalues to be stable and thus
+ we expect to have similar behaviours for the upward and downward system,
+ without considering the different temporal constants).
+ 
+\end_layout
+
+\begin_layout Standard
+Moreover, this time the component of the state that oscillates is the 
+\begin_inset Formula $\alpha\left(t\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Lin_K_up_sw_low.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{up,pp}$
+\end_inset
+
+ control and 
+\begin_inset Formula $\alpha_{ref}\left(t\right)=0.1Hz$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Lin_K_up_sw_vhigh.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{up,pp}$
+\end_inset
+
+ control and 
+\begin_inset Formula $\alpha_{ref}\left(t\right)=10Hz$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Lin_K_lqr_u_sw_low.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{up,lqr}$
+\end_inset
+
+ control and 
+\begin_inset Formula $\alpha_{ref}\left(t\right)=0.1Hz$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Lin_K_lqr_u_sw_high.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{up,lqr}$
+\end_inset
+
+ control and 
+\begin_inset Formula $\alpha_{ref}\left(t\right)=1Hz$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body
