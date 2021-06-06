@@ -1654,7 +1654,12 @@ function x_dot = furuta(u,x)
 
 \begin_layout Plain Layout
 
-a = x(2); % x(2)+pi FOR UPWARD POSITION
+a = x(2); % Downward position 
+\end_layout
+
+\begin_layout Plain Layout
+
+% a=x(2)+pi; % Upward position 
 \end_layout
 
 \begin_layout Plain Layout
@@ -1887,7 +1892,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Open loop response of the whole system.
+Open loop response of the linearized system.
 \end_layout
 
 \end_inset
@@ -1922,7 +1927,7 @@ status open
 \begin_inset Graphics
 	filename imgs/Lin_openLoop_alpha.svg
 	lyxscale 50
-	width 45text%
+	width 49text%
 
 \end_inset
 
@@ -1934,7 +1939,7 @@ status open
 \begin_inset Graphics
 	filename imgs/Lin_K_down_alpha.svg
 	lyxscale 50
-	width 45text%
+	width 49text%
 
 \end_inset
 
@@ -1965,12 +1970,12 @@ Evolution over time for
 
 \begin_layout Standard
 As we can see from figures above, the system controlled with 
-\begin_inset Formula $K_{down}$
+\begin_inset Formula $K_{d,pp}$
 \end_inset
 
- control (made by pole placement) now have a very slight overshoot, while
- the damping is now gone (we converge from the same side to zero, instead
- of oscillating around it).
+ control now have a very slight overshoot, while the damping is now gone
+ (we converge from the same side to zero, instead of oscillating around
+ it).
 \end_layout
 
 \begin_layout Section
@@ -2664,6 +2669,1794 @@ We can see that since the reference is set to an unstable angle for the
  the speed thetaDot must be constant.
  But since the system is asymptotically stable, this behaviour is not allowed
  (???).
+\end_layout
+
+\begin_layout Section
+Nonlinear system
+\end_layout
+
+\begin_layout Standard
+Throughout this session, the same simulations already seen will be run,
+ to find out that only for a neighbourhood of the origin the linearized
+ and non linear systems will work similarly (approximately few degrees,
+ that means tenths of radians).
+ Both the two cases will be analysed, the downward and the upward position,
+ so we have to change coordinates for simplicity in order to have the same
+ origin stabilization criterion.
+\end_layout
+
+\begin_layout Subsection
+Downward position
+\end_layout
+
+\begin_layout Subsubsection
+Open loop response
+\end_layout
+
+\begin_layout Standard
+Also in the non linear case, it is interesting to see the open loop response;
+ in particular, we expect that the shape of state evolution would be the
+ more similar to the linearized one the less the initial condition differs
+ from the origin.
+ As said in the linearized case above, this imply that the chosen initial
+ conditions
+\begin_inset Formula 
+\[
+\begin{bmatrix}x_{1}\left(0\right) & x_{2}\left(0\right) & x_{3}\left(0\right) & x_{4}\left(0\right)\end{bmatrix}^{T}=\begin{bmatrix}0.5 & \nicefrac{\pi}{4} & 0.3 & 0.1\end{bmatrix}^{T}
+\]
+
+\end_inset
+
+are sufficiently moved from the origin to show a difference between the
+ two behaviours, but not enough to be quite similar.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_openLoop.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/Lin_openLoop.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Open loop response of the nonlinear system (left) compared with the linearized
+ (right).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As we can notice from the above plot, 
+\begin_inset Formula $\dot{\theta}$
+\end_inset
+
+ initially has a sharper shape, while 
+\begin_inset Formula $\dot{\alpha}$
+\end_inset
+
+ reaches bigger values in module, given by the nonlinear components neglected.
+ Overall, for such small initial conditions, the behaviour is quite similar.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_K_down_alpha.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/Lin_K_down_alpha.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Evolution over time for 
+\begin_inset Formula $\alpha_{cl}\left(t\right)$
+\end_inset
+
+ with 
+\begin_inset Formula $K_{d,pp}$
+\end_inset
+
+ for NL and Lin systems.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Focusing on the 
+\begin_inset Formula $\alpha\left(t\right)$
+\end_inset
+
+ behaviour, we can observe that it is quite similar in both cases, with
+ slighly less overshoot and slightly longer setting time for nonlinear system.
+ Overall, the initial conditions near zero allow to reduce differences.
+\end_layout
+
+\begin_layout Subsubsection
+Basin of convergence
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_K_unstable.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Evolution over time from an unstable condition 
+\begin_inset Formula $\left(K_{d,pp}\ ,\ x_{0}=\left[0,\nicefrac{\pi}{4},0,0\right]^{T}\right)$
+\end_inset
+
+ of the NL system.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Before proceeding in further simulations, it is useful to introduce some
+ boundaries for possible initial conditions.
+ As we know, linearized systems can describe the behaviour of a system only
+ in a neighbourhood of the origin.
+ It follows that it can be defined a specific interval of initial conditions
+ for which the system is stabilized, hence the controller works also for
+ the real case.
+\end_layout
+
+\begin_layout Standard
+From the simulation above, we can see that the control is not enough to
+ bring the state to zero before the gravity pull it to the downward position.
+ At that point the system starts to oscillates around 
+\begin_inset Formula $\frac{\pi}{2}$
+\end_inset
+
+ while keeping to accelerate along the 
+\begin_inset Formula $\theta$
+\end_inset
+
+ variable, trying to keep the pendulum up.
+ It is obvious that in the real world, we are limited about the speed we
+ can reach, so it is inevitable that the arm will finally go in the downward
+ position.
+ 
+\end_layout
+
+\begin_layout Standard
+The simulation when the system is in this case is very slow, but we can
+ exploit this behaviour, as we can see below.
+\end_layout
+
+\begin_layout Standard
+To do so, the system has been ported as function to be integrated through
+ ode45, and the following matlab code has been written:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset listings
+lstparams "language=Matlab,numbers=left,numberstyle={\footnotesize},stepnumber=5,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+%% Nonlinear evolution (ODE)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% Check stability
+\end_layout
+
+\begin_layout Plain Layout
+
+steps = 15; % USE AT LEAST TWO.
+\end_layout
+
+\begin_layout Plain Layout
+
+state_blue = [];
+\end_layout
+
+\begin_layout Plain Layout
+
+state_red = [];
+\end_layout
+
+\begin_layout Plain Layout
+
+for alpha = -pi/2:(2*pi/(4*(steps-1))):pi/2
+\end_layout
+
+\begin_layout Plain Layout
+
+    for theta = -pi:(2*pi/((steps-1))):pi
+\end_layout
+
+\begin_layout Plain Layout
+
+                
+\end_layout
+
+\begin_layout Plain Layout
+
+		x_init = [theta; alpha; 0; 0];
+\end_layout
+
+\begin_layout Plain Layout
+
+		tstart = tic;
+\end_layout
+
+\begin_layout Plain Layout
+
+    	[~,x] = ode45(@(t,x) furuta_ode(t,x,K_lqr_u),...
+\end_layout
+
+\begin_layout Plain Layout
+
+				[0,10],x_init,...
+\end_layout
+
+\begin_layout Plain Layout
+
+				odeset('Events',@(t,x) time_event(t,x,tstart)));
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+		error = abs( x(end,2)/(2*pi) - round(x(end,2)/(2*pi)) );
+\end_layout
+
+\begin_layout Plain Layout
+
+        if (error < 0.1)
+\end_layout
+
+\begin_layout Plain Layout
+
+            state_blue(end+1,:) = [theta, alpha];
+\end_layout
+
+\begin_layout Plain Layout
+
+		else
+\end_layout
+
+\begin_layout Plain Layout
+
+            state_red(end+1,:) = [theta, alpha];
+\end_layout
+
+\begin_layout Plain Layout
+
+		end
+\end_layout
+
+\begin_layout Plain Layout
+
+	end
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this way, we can test many initial conditions at once, finding the limit
+ for which the system succeed at stabilize itself.
+ However, some problems arises if we go in blindly: 
+\end_layout
+
+\begin_layout Itemize
+If the system is unstable, the simulation goes really slow, since Matlab
+ is trying to integrate a lot of point that are diverging.
+ To avoid inhuman times, we can bound our simulation so that it cannot lasts
+ more than 2 seconds of real time; in fact, all the simulations end up in
+ tenths of seconds when they converge, and if not, cutting the simulation
+ and seeing that the error is still relevant (if 
+\begin_inset Formula $\left|\alpha\left(t\right)\right|\thickapprox\frac{\pi}{2}$
+\end_inset
+
+ , the variable 
+\emph on
+error
+\emph default
+ will be around 0.5), means that the system has not been converged, and it
+ will never do.
+\end_layout
+
+\begin_layout Itemize
+The system cannot be stabilized for sure for 
+\begin_inset Formula $\left|\alpha\left(0\right)\right|\geq\frac{\pi}{2}$
+\end_inset
+
+ (at least with simpler controller, that does not exploit the swinging from
+ the downward position); for this reason, we can reduce the interval upon
+ which we select initial conditions.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\theta\in\left[-\pi,\pi\right]$
+\end_inset
+
+; moreover, thinking about the physical system, its initial condition marginally
+ influences the ability of converging.
+ In fact, very big initial conditions could influence the stability properties,
+ however, it is enough to set some slow asymptotically poles such that its
+ initial convergence can be sacrificed to let 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ to reach the upward position, and then converging to the global origin.
+ As this approach suggests, it is the same that justify the use of LQR controlle
+r, such that we can conveniently choose weights to be assigned accordingly
+ to a certain priority given by us.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Stab_K_up2.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/Stab_K_lqr_u2.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Upward (typo in figure) stability of initial conditions with 
+\begin_inset Formula $K_{d,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{d,lqr}$
+\end_inset
+
+ controller.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As previously thought, the system converges for only a neighbourhood of
+ the origin; moreover, the LQR approach proves to be better since does not
+ force 
+\begin_inset Formula $\theta$
+\end_inset
+
+ to converge too fast, leading to a larger band of controllability.
+ Another detail is that the symmetry of the maximum controllable 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ angle has a diagonal simmetry, not vertical.
+ This is expected because the pendulum has to rapidly increase 
+\begin_inset Formula $\theta$
+\end_inset
+
+ to keep up with its falling upper part, so for each 
+\begin_inset Formula $\alpha_{0}$
+\end_inset
+
+, there will be for sure an optimal starting value 
+\begin_inset Formula $\theta_{0}^{*}\in\mathbb{R}$
+\end_inset
+
+ such that following a certain profile 
+\begin_inset Formula $\theta^{*}\left(t\right)$
+\end_inset
+
+, the system will be stabilized.
+ The problem is that we cannot find an easy closed formula to determine
+ it, and moreover every 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ the system reaches the target value for 
+\begin_inset Formula $\theta$
+\end_inset
+
+, so we have a limited space to build speed and we have to rely on faster
+ poles, that may break the stability.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/Finer_Stab_K_up.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/Finer_Stab_K_lqr_u.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Finer upward stability of at 
+\begin_inset Formula $\theta_{0}=0$
+\end_inset
+
+, with 
+\begin_inset Formula $K_{d,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{d,lqr}$
+\end_inset
+
+ controller.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Due to the long time required for simulating each initial condition, we
+ stick with a specific 
+\begin_inset Formula $\theta_{0}$
+\end_inset
+
+ and then span the interval between the greatest stable 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+and the smallest unstable one, from the previous simulation, increasing
+ the number of points between the above-mentioned conditions.
+ As we can notice from the figure, where the last stable initial condition
+ is highlighted, the LQR control has an advantage over the arbitrary pole
+ placement approach, that increases as much as we move away from the 
+\begin_inset Formula $\theta_{0}=0$
+\end_inset
+
+ condition.
+ For instance, with this 
+\begin_inset Formula $\theta_{0}$
+\end_inset
+
+, we can stabilize the system until at least 
+\begin_inset Formula $40.9665°,K_{pp}$
+\end_inset
+
+, or 
+\begin_inset Formula $46.4096°,K_{lqr}$
+\end_inset
+
+; as results, the next simulations will be all with an angle 
+\begin_inset Formula $\left|\alpha_{0}\right|\leq\frac{\pi}{6}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset space \hspace{}
+\length 25text%
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/Stab_K_d.svg
+	lyxscale 50
+	width 50text%
+
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 25text%
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Downward stability of the NL system.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As can be imagined, the downward position does not have any problem to be
+ reached by any controller.
+\end_layout
+
+\begin_layout Subsubsection
+Constant reference signal
+\end_layout
+
+\begin_layout Standard
+We are now ready to proceeding to remaining simulations.
+ First of all, we want to see what happens when we try to follow a constant
+ reference signal, both up and downwards.
+ To have a credible interval, we set a 
+\begin_inset Formula $\alpha=\nicefrac{\pi}{8}\ ,\ \theta=\pi$
+\end_inset
+
+ reference both downward and upward position, while starting from the two
+ origins (we refer in this way to the two equilibria).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_ref_K_up.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/NL_ref_K_lqr_u.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Upward stability, with 
+\begin_inset Formula $K_{u,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{u,lqr}$
+\end_inset
+
+ controller of the NL system.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As we can see from the figure, the system try to follow the reference signal
+ (more in the case of the LQR control); however, it is impossible to keep
+ it constantly (we ought to have a 
+\begin_inset Formula $\theta$
+\end_inset
+
+ that always increases as well as the speed), so 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ goes eventually to zero.
+ The main difference between the two controller is that thanks to the lower
+ weight over the 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ component for the LQR controller, the 
+\begin_inset Formula $\theta$
+\end_inset
+
+ angle can go further, doing more spins before settling (as we can see from
+ the decreasing value of 
+\begin_inset Formula $\dot{\theta}$
+\end_inset
+
+) over some 
+\begin_inset Formula $\left(2k+1\right)\pi$
+\end_inset
+
+ position, plus an error given by a non zero reference for 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_ref_K_down.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/NL_ref_K_lqr_d.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Downward stability, with 
+\begin_inset Formula $K_{d,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{d,lqr}$
+\end_inset
+
+ controller of the NL system.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case we have a very similar behaviour, with obviously lower values
+ for 
+\begin_inset Formula $\theta$
+\end_inset
+
+ since the stable behaviour of the downward position and a lower cost in
+ the control part of the cost function (remember that 
+\begin_inset Formula $R_{down}=10$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsection
+Square-wave reference
+\end_layout
+
+\begin_layout Standard
+For this last section, we have to repeat the tracking experiment done previously
+; for this reason, we will have two subsection, one for the downward position
+ and one for the upward
+\end_layout
+
+\begin_layout Subsubsection
+Downward position
+\end_layout
+
+\begin_layout Standard
+In this case, 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is set to a constant 0 reference signal, while the 
+\begin_inset Formula $\theta$
+\end_inset
+
+ angle oscillates.
+ As the previous case, we will have both high and low frequency, as well
+ as different amplitudes.
+\end_layout
+
+\begin_layout Paragraph
+Low Frequency (
+\begin_inset Formula $f$
+\end_inset
+
+=0.1 Hz)
+\end_layout
+
+\begin_layout Standard
+As
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_sw_K_down_s_45.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/NL_sw_K_lqr_d_s_45.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{d,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{d,lqr}$
+\end_inset
+
+ controller, 
+\begin_inset Formula $\theta_{ref}=\pm45°$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_sw_K_down_s_135.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/NL_sw_K_lqr_d_s_135.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{d,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{d,lqr}$
+\end_inset
+
+ controller, 
+\begin_inset Formula $\theta_{ref}=\pm135°$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+High Frequency (
+\begin_inset Formula $f$
+\end_inset
+
+=1 Hz)
+\end_layout
+
+\begin_layout Standard
+As
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_sw_K_down_f_45.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/NL_sw_K_lqr_d_f_45.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{d,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{d,lqr}$
+\end_inset
+
+ controller, 
+\begin_inset Formula $\theta_{ref}=\pm45°$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_sw_K_down_f_135.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/NL_sw_K_lqr_d_f_135.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{d,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{d,lqr}$
+\end_inset
+
+ controller, 
+\begin_inset Formula $\theta_{ref}=\pm135°$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Upward position
+\end_layout
+
+\begin_layout Standard
+This time, we have two degrees of freedom along which we can increase the
+ amplitude; in fact, in addiction to 
+\begin_inset Formula $\alpha_{0}$
+\end_inset
+
+ as analysed before, for which after a certain amplitude the system is unstable,
+ if the control is too aggressive along 
+\begin_inset Formula $\theta$
+\end_inset
+
+ we may end up in breaking stability, as we will later see.
+\end_layout
+
+\begin_layout Standard
+For the 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ condition, we have chosen one that accordingly to the stability simulations
+ is stable for both, and one that it is not.
+\end_layout
+
+\begin_layout Standard
+Again, the initial condition will be the upward origin for each simulation.
+\end_layout
+
+\begin_layout Paragraph
+Low Frequency (
+\begin_inset Formula $f$
+\end_inset
+
+=0.1 Hz), 
+\begin_inset Formula $\boldsymbol{\theta}$
+\end_inset
+
+ changes.
+\end_layout
+
+\begin_layout Standard
+As
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_sw_K_up_s_90th.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/NL_sw_K_lqr_u_s_90th.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{u,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{u,lqr}$
+\end_inset
+
+ controller, 
+\begin_inset Formula $\theta_{ref}=\pm90°$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_sw_K_up_s_180th.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/NL_sw_K_lqr_u_s_180th.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{u,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{u,lqr}$
+\end_inset
+
+ controller, 
+\begin_inset Formula $\theta_{ref}=\pm180°$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+High Frequency (
+\begin_inset Formula $f$
+\end_inset
+
+=1 Hz), 
+\begin_inset Formula $\boldsymbol{\theta}$
+\end_inset
+
+ changes.
+\end_layout
+
+\begin_layout Standard
+As
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_sw_K_up_f_90th.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/NL_sw_K_lqr_u_f_90th.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{u,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{u,lqr}$
+\end_inset
+
+ controller, 
+\begin_inset Formula $\theta_{ref}=\pm90°$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_sw_K_up_f_180th.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/NL_sw_K_lqr_u_f_180th.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{u,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{u,lqr}$
+\end_inset
+
+ controller, 
+\begin_inset Formula $\theta_{ref}=\pm180°$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As we can expect, since our controller try to follow the square wave reference
+ for theta, it ends up breaking the stability, while the LQR one is too
+ slow and does not follow almost completely the signal reference.
+\end_layout
+
+\begin_layout Paragraph
+Low Frequency (
+\begin_inset Formula $f$
+\end_inset
+
+=0.1 Hz), 
+\begin_inset Formula $\boldsymbol{\alpha}$
+\end_inset
+
+ changes.
+\end_layout
+
+\begin_layout Standard
+As
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_sw_K_up_s_10a.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/NL_sw_K_lqr_u_s_10a.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{u,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{u,lqr}$
+\end_inset
+
+ controller, 
+\begin_inset Formula $\alpha_{ref}=\pm10°$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_sw_K_up_s_40a.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/NL_sw_K_lqr_u_s_40a.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{u,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{u,lqr}$
+\end_inset
+
+ controller, 
+\begin_inset Formula $\alpha_{ref}=\pm40°$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+High Frequency (
+\begin_inset Formula $f$
+\end_inset
+
+=1 Hz), 
+\begin_inset Formula $\boldsymbol{\alpha}$
+\end_inset
+
+ changes.
+\end_layout
+
+\begin_layout Standard
+At this frequency, at 10° are stable but we oscillates a lot
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_sw_K_up_f_10a.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/NL_sw_K_lqr_u_f_10a.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{u,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{u,lqr}$
+\end_inset
+
+ controller, 
+\begin_inset Formula $\alpha_{ref}=\pm10°$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_sw_K_up_f_40a.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/NL_sw_K_lqr_u_f_40a.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{u,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{u,lqr}$
+\end_inset
+
+ controller, 
+\begin_inset Formula $\alpha_{ref}=\pm40°$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Very High Frequency (
+\begin_inset Formula $f$
+\end_inset
+
+=10 Hz), 
+\begin_inset Formula $\boldsymbol{\alpha}$
+\end_inset
+
+ changes.
+\end_layout
+
+\begin_layout Standard
+As
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imgs/NL_sw_K_up_vf_40a.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename imgs/NL_sw_K_lqr_u_vf_40a.svg
+	lyxscale 50
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+State evolution over time with 
+\begin_inset Formula $K_{u,pp}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{u,lqr}$
+\end_inset
+
+ controller, 
+\begin_inset Formula $\alpha_{ref}=\pm40°$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In all the cases we can see how the theta evolution follow the strength
+ imposed by the controller; moreover, we have two cases for which the NL
+ system behaves like the linearized one:
+\end_layout
+
+\begin_layout Itemize
+when the 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ reference angle is low: in this case, for any frequence, the behaviour
+ is similar, as expected;
+\end_layout
+
+\begin_layout Itemize
+when the frequency is high: in this case, the system, acting like a Low
+ Pass Filter, is not able to reach a sufficiently large state that would
+ bring it to instability; as the frequency increases, the allowed 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ angle does the same.
+ reaching also previously unstable angles.
+\end_layout
+
+\begin_layout Standard
+The difference from the linearized system is that there we had a controllable
+ couple, so by definition we can reach the origin from any state.
+ in this non linear case, we have instead (??? states that are equivalent
+ to others, so the state is not euclidean and we cannot apply the rules
+ previously found).
 \end_layout
 
 \end_body

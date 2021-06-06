@@ -203,21 +203,30 @@ save("matrices.mat")
 
 %% Simulations
 
-x0 =   [pi-0.1;      % theta
-        pi/8;     % alpha
-        0.3;      % theta_dot
-        0.1];     % alpha_dot
+% x0 =   [pi-0.1;      % theta
+%         pi/8;     % alpha
+%         0.3;      % theta_dot
+%         0.1];     % alpha_dot
+% 
 
+x0 =   [0;      % theta
+        0;     % alpha
+        0;      % theta_dot
+        0];     % alpha_dot
+    
+    
+    
 %% Plot Whole Graph
 
 leg = legend('$\theta(t)$','$\alpha(t)$',...
                 '$\dot{\theta}(t)$','$\dot{\alpha}(t)$',...
-                 '$\alpha_{ref}(t)$',...
+            ... %    '$\alpha_{ref}(t)$',...
                 'Interpreter', 'latex');
 set(leg, 'Interpreter', 'latex');
 
+%% USE THIS FOR 2x2 LAYOUT OF SCOPE
 set(gcf, 'InvertHardCopy', 'off')
-saveas(gcf, '../Lyx/imgs/Lin_K_lqr_u_sw_high.svg','svg')
+saveas(gcf, '../Lyx/imgs/NL_sw_K_up_f_40a.svg','svg')
 
 
 %% Plot Single evolution
@@ -226,10 +235,132 @@ leg = legend('$\alpha_{cl}(t)$', 'Interpreter', 'latex');
 set(leg, 'Interpreter', 'latex');
 
 set(gcf, 'InvertHardCopy', 'off')
-saveas(gcf, '../Lyx/imgs/Lin_K_down_alpha.svg','svg')
+saveas(gcf, '../Lyx/imgs/NL_K_down_alpha.svg','svg')
+
+
+
+
+
+
+%%
+
+
+
 
 %% Nonlinear evolution (ODE)
 
-%% Check stability
+% Check stability
+steps = 15; % USE AT LEAST TWO.
+state_blue = [];
+state_red = [];
+
+for alpha = -pi:(2*pi/(steps-1)):pi
+    for theta = -pi:(2*pi/((steps-1))):pi
+        
+        x_init = [theta; alpha; 0; 0];
+        
+        tstart = tic;
+        [~,x] = ode45(@(t,x) furuta_ode(t,x,K_down),[0,10],x_init,...
+                        odeset('Events',@(t,x) time_event(t,x,tstart)));
+        
+        error = abs( x(end,2)/(2*pi) - round(x(end,2)/(2*pi)) );
+        if (error < 0.1)
+            state_blue(end+1,:) = [theta, alpha];
+            
+        else
+            state_red(end+1,:) = [theta, alpha];
+        end
+        theta
+    end
+    alpha
+end
+
+% plot graph
+
+stab_fig = figure(2);
+clf(stab_fig);
+grid on
+hold on
+
+title("Stability for downward position ( $K_{lqr/pp},\ |\theta_{max}(0)| = |\alpha_{max}(0)|= \pi$)",...
+    "Interpreter","latex");
+
+xlabel('\theta')
+ylabel('\alpha')
+% xlim([-pi pi])
+% ylim([-pi pi])
+
+if (height(state_blue) > 0)    
+    scatter(state_blue(:,1), state_blue(:,2), 'blue', 'filled');
+end
+
+if (height(state_red) > 0)    
+    scatter(state_red(:,1), state_red(:,2), 'red', 'filled');
+end
+
+saveas(stab_fig, '../Lyx/imgs/Stab_K_d.svg','svg')
+
+%%
+
+title("Stability for downward position ( $K_{lqr},\  |\theta_{max}(0)|=\pi, |\alpha_{max}(0)|= \frac{\pi}{2}$)",...
+    "Interpreter","latex");
+
+
+saveas(stab_fig, '../Lyx/imgs/Stab_K_lqr_u2.svg','svg')
+
+
+%% Finer interval
+
+state_blue = [];
+state_red = [];
+
+% for alpha = 0.67:0.005:0.8 % K_up
+for alpha = 0.78:0.005:0.90 % K_lqr_u
+        
+        theta = 0;
+        
+        x_init = [theta; alpha; 0; 0];
+        
+        tstart = tic;
+        [~,x] = ode45(@(t,x) furuta_ode(t,x,K_lqr_u),[0,30],x_init,...
+                        odeset('Events',@(t,x) time_event(t,x,tstart)));
+        
+        error = abs( x(end,2)/(2*pi) - round(x(end,2)/(2*pi)) );
+        if (error < 0.1)
+            state_blue(end+1,:) = [theta, alpha];
+            
+        else
+            state_red(end+1,:) = [theta, alpha];
+        end
+    alpha
+end
+
+
+
+fig = figure(3);
+clf(fig);
+grid on
+hold on
+
+title("Finer stability, $K_{lqr}$","Interpreter","latex");
+
+xlabel('\theta')
+ylabel('\alpha')
+
+if (height(state_blue) > 0)    
+    scatter(state_blue(:,1), state_blue(:,2), 'blue', 'filled');
+end
+
+if (height(state_red) > 0)    
+    scatter(state_red(:,1), state_red(:,2), 'red', 'filled');
+end
+
+saveas(fig, '../Lyx/imgs/Finer_Stab_K_lqr_u.svg','svg')
+
+
+
+
+
+
 
 
