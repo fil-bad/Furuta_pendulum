@@ -422,7 +422,7 @@ considering the two equilibria later involved.
 \end_layout
 
 \begin_layout Itemize
-Linearize the system around the equilibrium points; in fact, it is legit
+Linearizing the system around the equilibrium points; in fact, it is legit
  to assume that both angular speeds are equal to zero – being these positions
  with constant value –, thus allowing us to linearize the system rewritten
  in the form 
@@ -1103,11 +1103,11 @@ Pole placement
 
 \begin_layout Standard
 Once ensured that 
-\begin_inset Formula $\left(A_{down},B_{down}\right)$
+\begin_inset Formula $\left(A_{d},B_{d}\right)$
 \end_inset
 
  and 
-\begin_inset Formula $\left(A_{up},B_{up}\right)$
+\begin_inset Formula $\left(A_{u},B_{u}\right)$
 \end_inset
 
  pairs are controllable, it is legit to move the poles of the open loop
@@ -1631,7 +1631,7 @@ For the nonlinear system, it has been defined by the following function
 
 , and we have to take this into account for the upward position by adding
  an offset of 
-\begin_inset Formula $-\pi$
+\begin_inset Formula $+\pi$
 \end_inset
 
  for the 
@@ -2359,7 +2359,7 @@ status open
 
 \begin_layout Plain Layout
 State evolution over time with 
-\begin_inset Formula $K_{up,pp}$
+\begin_inset Formula $K_{u,pp}$
 \end_inset
 
  control.
@@ -2403,7 +2403,7 @@ status open
 
 \begin_layout Plain Layout
 State evolution over time with 
-\begin_inset Formula $K_{up,lqr}$
+\begin_inset Formula $K_{u,lqr}$
 \end_inset
 
  control.
@@ -2497,7 +2497,7 @@ status open
 
 \begin_layout Plain Layout
 State evolution over time with 
-\begin_inset Formula $K_{up,pp}$
+\begin_inset Formula $K_{u,pp}$
 \end_inset
 
  control and 
@@ -2540,7 +2540,7 @@ status open
 
 \begin_layout Plain Layout
 State evolution over time with 
-\begin_inset Formula $K_{up,pp}$
+\begin_inset Formula $K_{u,pp}$
 \end_inset
 
  control and 
@@ -2625,7 +2625,7 @@ status open
 
 \begin_layout Plain Layout
 State evolution over time with 
-\begin_inset Formula $K_{up,lqr}$
+\begin_inset Formula $K_{u,lqr}$
 \end_inset
 
  control and 
@@ -2668,7 +2668,7 @@ status open
 
 \begin_layout Plain Layout
 State evolution over time with 
-\begin_inset Formula $K_{up,lqr}$
+\begin_inset Formula $K_{u,lqr}$
 \end_inset
 
  control and 
@@ -2900,7 +2900,7 @@ status open
 
 \begin_layout Plain Layout
 Evolution over time from an unstable condition 
-\begin_inset Formula $\left(K_{d,pp}\ ,\ x_{0}=\left[0,\nicefrac{\pi}{4},0,0\right]^{T}\right)$
+\begin_inset Formula $\left(K_{u,pp}\ ,\ x_{0}=\left[0,\nicefrac{\pi}{4},0,0\right]^{T}\right)$
 \end_inset
 
  of the NL system.
@@ -3355,11 +3355,11 @@ and the smallest unstable one, from the previous simulation, increasing
 \end_inset
 
 , we can stabilize the system until at least 
-\begin_inset Formula $40.9665°,K_{pp}$
+\begin_inset Formula $\alpha_{0}=40.9665°,K_{u,pp}$
 \end_inset
 
 , or 
-\begin_inset Formula $46.4096°,K_{lqr}$
+\begin_inset Formula $\alpha_{0}=46.4096°,K_{u,lqr}$
 \end_inset
 
 .
@@ -3395,11 +3395,11 @@ status open
 
 \begin_layout Plain Layout
 Downward stability of the NL system (both 
-\begin_inset Formula $K_{u,pp}$
+\begin_inset Formula $K_{d,pp}$
 \end_inset
 
  and 
-\begin_inset Formula $K_{u,lqr}$
+\begin_inset Formula $K_{d,lqr}$
 \end_inset
 
  have the same results).
